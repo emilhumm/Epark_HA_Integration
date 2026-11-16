@@ -1,0 +1,330 @@
+# e-park PERMIT DISPATCHER - a Home Assistant package (helpers, guarded script, reset automation, car lookup).
+#
+# Needs the epark integration (custom_components/epark) set up, which provides sensor.active_guest_permits and
+# sensor.guest_hours_left_this_month and the epark.issue_permit / epark.lookup_plate services (version 0.3.1+,
+# Home Assistant 2024.11+). The form only asks for a phone number, so set a default recipient e-mail in the
+# integration (at set-up, or later: Settings > Devices & services > e-park > Reconfigure).
+#
+# Install: in configuration.yaml
+#   homeassistant:
+#     packages: !include_dir_named packages
+# then copy this file to /config/packages/epark.yaml and restart (or reload input_select, input_text, scripts and
+# automations). Durations offered: change input_select.epark_duration_hours to the presets of your e-park pool
+# (sensor.available_pools -> pools[0].presets). The phone pattern assumes 8-digit Danish numbers.
+#
+# The dashboard card for it: examples/dashboard_permit_dispatcher.yaml (core cards only).
+
+input_select:
+  epark_duration_hours:
+    name: e-park duration
+    options:
+    - '2'
+    - '4'
+    - '8'
+    - '12'
+    - '24'
+    initial: '2'
+    icon: mdi:timer-sand
+  epark_stage:
+    name: e-park dispatcher stage
+    options:
+    - idle
+    - sending
+    - confirm
+    - sent
+    - error
+    initial: idle
+    icon: mdi:ticket-confirmation-outline
+input_text:
+  epark_plate:
+    name: e-park license plate
+    max: 10
+    pattern: '[A-Za-z0-9 ]*'
+    icon: mdi:car
+  epark_phone:
+    name: e-park recipient phone
+    min: 8
+    max: 8
+    pattern: '[0-9]{8}'
+    icon: mdi:cellphone-message
+  epark_message:
+    name: e-park dispatcher message
+    max: 255
+    icon: mdi:message-text-outline
+  epark_vehicle:
+    name: e-park vehicle
+    max: 255
+    icon: mdi:car-info
+script:
+  epark_issue_from_form:
+    alias: e-park — Issue permit from form
+    description: 'Issues one guest permit from the dispatcher form (input_text.epark_plate / epark_phone, input_select.epark_duration_hours)
+      and reports progress in input_select.epark_stage (idle, sending, confirm, sent, error) + input_text.epark_message, which
+      the dashboard shows. Taps while it runs are dropped (mode single). A plate that already has an active permit, or got
+      one in the last 2 minutes, only gets another one through confirm: true while the stage is ''confirm'' for that plate
+      (honoured 1.5 to 60 s after the question). A permit longer than the guest hours left this month is refused. dry_run:
+      true does everything except the e-park call.'
+    mode: single
+    max_exceeded: silent
+    fields:
+      confirm:
+        description: true = SEND ANOTHER (honoured only while the stage is "confirm" for this plate)
+        default: false
+        selector:
+          boolean: {}
+      dry_run:
+        description: true = skip the e-park call (for testing the popup)
+        default: false
+        selector:
+          boolean: {}
+    sequence:
+    - delay:
+        milliseconds: 250
+    - variables:
+        plate: '{{ states(''input_text.epark_plate'') | trim }}'
+        phone: '{{ states(''input_text.epark_phone'') | trim }}'
+        hours: '{{ states(''input_select.epark_duration_hours'') | int(0) }}'
+        key: '{{ plate | upper | replace('' '', '''') }}'
+        stage: '{{ states(''input_select.epark_stage'') }}'
+        stage_age: '{{ (now() - states.input_select.epark_stage.last_changed).total_seconds() if states.input_select.epark_stage
+          is not none else 9999 }}'
+        msg_key: '{{ states(''input_text.epark_message'').split(''|'')[0] }}'
+        until_ts: '{% set ns = namespace(t=0) %}{% for p in state_attr(''sensor.active_guest_permits'', ''permits'') or []
+          %}{% set t = as_timestamp(p.valid_to, 0) %}{% if (p.plate or '''') | upper | replace('' '', '''') == key and t >
+          as_timestamp(now()) and t > ns.t %}{% set ns.t = t %}{% endif %}{% endfor %}{{ ns.t }}'
+        just_sent: '{{ stage == ''sent'' and msg_key == key and stage_age | float(9999) < 120 }}'
+        confirmed: '{{ confirm | default(false) | bool(false) and stage == ''confirm'' and msg_key == key and 1.5 < stage_age
+          | float(0) < 60 }}'
+    - if:
+      - condition: template
+        value_template: '{{ key | length == 0 or hours <= 0 or not (phone | regex_match(''^[0-9]{8}$'')) }}'
+      then:
+      - action: input_text.set_value
+        target:
+          entity_id: input_text.epark_message
+        data:
+          value: Fill in the license plate and an 8-digit phone number
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.epark_stage
+        data:
+          option: error
+      - stop: form incomplete
+    - if:
+      - condition: template
+        value_template: '{{ (until_ts | float(0) > 0 or just_sent) and not confirmed }}'
+      then:
+      - action: input_text.set_value
+        target:
+          entity_id: input_text.epark_message
+        data:
+          value: '{{ key }}|{{ (until_ts | float) | timestamp_custom(''%H:%M'') if until_ts | float(0) > 0 else '''' }}|{{
+            hours }}'
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.epark_stage
+        data:
+          option: confirm
+      - stop: plate already has a permit - waiting for SEND ANOTHER
+    - variables:
+        hours_left: '{{ states(''sensor.guest_hours_left_this_month'') | float(-1) }}'
+    - if:
+      - condition: template
+        value_template: '{{ hours_left >= 0 and hours > hours_left }}'
+      then:
+      - action: input_text.set_value
+        target:
+          entity_id: input_text.epark_message
+        data:
+          value: Only {{ '%g' | format(hours_left) }} h left this month - pick a shorter permit.
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.epark_stage
+        data:
+          option: error
+      - stop: not enough guest hours left this month
+    - variables:
+        t0: '{{ as_timestamp(now()) }}'
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.epark_message
+      data:
+        value: '{{ key }}|{{ hours }}'
+    - action: input_select.select_option
+      target:
+        entity_id: input_select.epark_stage
+      data:
+        option: sending
+    - if:
+      - condition: template
+        value_template: '{{ dry_run | default(false) | bool(false) }}'
+      then:
+      - delay: 2
+      else:
+      # continue_on_error + response: a refused permit (e-park error, no default recipient e-mail, ...) is shown at
+      # once; without it the script stopped here and the reset automation only reported it after 30 s
+      - action: epark.issue_permit
+        data:
+          license_plate: '{{ plate }}'
+          duration_minutes: '{{ hours * 60 }}'
+          phone: '{{ phone }}'
+        response_variable: permit
+        continue_on_error: true
+      - if:
+        - condition: template
+          value_template: '{{ permit is not defined }}'
+        then:
+        - action: input_text.set_value
+          target:
+            entity_id: input_text.epark_message
+          data:
+            value: Permit not sent - e-park or the integration refused it (details in Settings > System > Logs). Check
+              ACTIVE PERMITS before you try again.
+        - action: input_select.select_option
+          target:
+            entity_id: input_select.epark_stage
+          data:
+            option: error
+        - stop: permit not sent
+      - wait_template: '{% set ns = namespace(ok=false) %}{% for p in state_attr(''sensor.active_guest_permits'', ''permits'')
+          or [] %}{% if (p.plate or '''') | upper | replace('' '', '''') == key and as_timestamp(p.valid_from, 0) >= t0 -
+          30 %}{% set ns.ok = true %}{% endif %}{% endfor %}{{ ns.ok }}'
+        timeout: 20
+        continue_on_timeout: true
+    - variables:
+        new_until: '{% set ns = namespace(t=0) %}{% for p in state_attr(''sensor.active_guest_permits'', ''permits'') or []
+          %}{% set t = as_timestamp(p.valid_to, 0) %}{% if (p.plate or '''') | upper | replace('' '', '''') == key and t >
+          ns.t %}{% set ns.t = t %}{% endif %}{% endfor %}{{ ns.t if (ns.t > t0 + hours * 3600 - 300 and not (dry_run | default(false)
+          | bool(false))) else t0 + hours * 3600 }}'
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.epark_message
+      data:
+        value: '{{ key }}|{{ (new_until | float) | timestamp_custom(''%H:%M'') }}|{{ hours }}'
+    - action: input_select.select_option
+      target:
+        entity_id: input_select.epark_stage
+      data:
+        option: sent
+automation:
+- id: epark_dispatcher_stage_reset
+  alias: e-park · Dispatcher stage reset
+  description: Puts input_select.epark_stage back to idle 2 min after a permit was sent, 1 min after an error or an unanswered
+    confirmation, when the plate is edited and at HA start; turns a 'sending' that got no answer within 30 s (the e-park call
+    failed and stopped the script) into an error the dashboard shows.
+  triggers:
+  - trigger: state
+    entity_id: input_select.epark_stage
+    to: sent
+    for:
+      minutes: 2
+    id: done
+  - trigger: state
+    entity_id: input_select.epark_stage
+    to: error
+    for:
+      minutes: 1
+    id: done
+  - trigger: state
+    entity_id: input_select.epark_stage
+    to: confirm
+    for:
+      minutes: 1
+    id: done
+  - trigger: state
+    entity_id: input_select.epark_stage
+    to: sending
+    for:
+      seconds: 30
+    id: stuck
+  - trigger: state
+    entity_id: input_text.epark_plate
+    id: plate
+  - trigger: homeassistant
+    event: start
+    id: start
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: stuck
+      sequence:
+      - action: input_text.set_value
+        target:
+          entity_id: input_text.epark_message
+        data:
+          value: No answer from e-park within 30 s. Check ACTIVE PERMITS before you try again.
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.epark_stage
+        data:
+          option: error
+    - conditions:
+      - condition: trigger
+        id: plate
+      - condition: state
+        entity_id: input_select.epark_stage
+        state:
+        - confirm
+        - sent
+        - error
+      sequence:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.epark_stage
+        data:
+          option: idle
+    - conditions:
+      - condition: trigger
+        id:
+        - done
+        - start
+      sequence:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.epark_stage
+        data:
+          option: idle
+  mode: queued
+- id: epark_vehicle_lookup
+  alias: e-park · Vehicle lookup
+  description: Looks up the car behind input_text.epark_plate (Danish motor register, via epark.lookup_plate) and writes it
+    to input_text.epark_vehicle as STATUS|text (looking, ok, none = not in the register, fail), which the dashboard shows
+    under the fields. Plates shorter than 2 characters clear it.
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id: input_text.epark_plate
+  conditions: []
+  actions:
+  - variables:
+      plate: '{{ states(''input_text.epark_plate'') | trim | replace('' '', '''') | upper }}'
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ plate | length < 2 }}'
+      sequence:
+      - action: input_text.set_value
+        target:
+          entity_id: input_text.epark_vehicle
+        data:
+          value: ''
+    default:
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.epark_vehicle
+      data:
+        value: looking|
+    - action: epark.lookup_plate
+      data:
+        license_plate: '{{ plate }}'
+      response_variable: car
+      continue_on_error: true
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.epark_vehicle
+      data:
+        value: '{% if car is not defined %}fail|{% elif car.found %}ok|{{ [car.brand, car.model] | select | join('' '') }}{%
+          if car.color %} · {{ car.color }}{% endif %}{% if car.year %} · {{ car.year }}{% endif %}{% else %}none|{% endif
+          %}'

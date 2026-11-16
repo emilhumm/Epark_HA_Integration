@@ -1,0 +1,149 @@
+# e-park PERMIT DISPATCHER - dashboard card, Home Assistant core cards only (no HACS cards needed).
+# Paste into a dashboard: Edit dashboard > Add card > Manual. Needs examples/epark_package.yaml (helpers, script,
+# automation) and the epark integration. What it does:
+#   - header with the guest hours left this month (e-park's own count)
+#   - duration, plate and phone fields
+#   - ONE button that follows input_select.epark_stage: Dispatch permit / Sending... (no tap action) / Permit sent /
+#     Try again; when the plate already has a permit it is replaced by a question + Cancel / Send another
+#   - a status line (ha-alert) and the active permits, newest first
+# Note: HA's markdown strips style/class attributes, so only plain tags and <ha-alert> are used.
+type: vertical-stack
+cards:
+  - type: markdown
+    content: >-
+      {% set h = states('sensor.guest_hours_left_this_month') %}
+      ### Permit dispatcher{% if h not in ['unknown', 'unavailable', 'none', ''] %} · {{ '%g' | format(h | float(0)) }} h left this month{% endif %}
+
+  - type: entities
+    entities:
+      - entity: input_select.epark_duration_hours
+        name: Duration (hours)
+      - entity: input_text.epark_plate
+        name: License plate
+      - entity: input_text.epark_phone
+        name: Phone (SMS receipt)
+
+  # the car behind the plate (automation epark_vehicle_lookup -> input_text.epark_vehicle)
+  - type: conditional
+    conditions:
+      - condition: state
+        entity: input_text.epark_vehicle
+        state_not: ["", unknown, unavailable]
+    card:
+      type: markdown
+      content: >-
+        {% set v = states('input_text.epark_vehicle').split('|') %}{% set t = v[1] if v | length > 1 else '' %}
+        {% if v[0] == 'ok' %}<ha-icon icon="mdi:car-side"></ha-icon> **{{ t }}**
+        {% elif v[0] == 'looking' %}Looking up the car …
+        {% elif v[0] == 'none' %}<ha-alert alert-type="warning">Not in the motor register - check the plate</ha-alert>
+        {% elif v[0] == 'fail' %}Car lookup failed{% endif %}
+
+  # the button, one card per stage (only the matching one is shown)
+  - type: conditional
+    conditions:
+      - condition: state
+        entity: input_select.epark_stage
+        state_not: [sending, sent, error, confirm]
+    card:
+      type: button
+      name: Dispatch permit
+      icon: mdi:send
+      show_state: false
+      tap_action:
+        action: perform-action
+        perform_action: script.epark_issue_from_form
+  - type: conditional
+    conditions:
+      - condition: state
+        entity: input_select.epark_stage
+        state: sending
+    card:
+      type: button
+      name: Sending…
+      icon: mdi:timer-sand
+      show_state: false
+      tap_action:
+        action: none
+  - type: conditional
+    conditions:
+      - condition: state
+        entity: input_select.epark_stage
+        state: sent
+    card:
+      type: button
+      name: Permit sent
+      icon: mdi:check-circle
+      show_state: false
+      tap_action:
+        action: perform-action
+        perform_action: script.epark_issue_from_form
+  - type: conditional
+    conditions:
+      - condition: state
+        entity: input_select.epark_stage
+        state: error
+    card:
+      type: button
+      name: Try again
+      icon: mdi:refresh
+      show_state: false
+      tap_action:
+        action: perform-action
+        perform_action: script.epark_issue_from_form
+
+  # the plate already has a permit: ask first
+  - type: conditional
+    conditions:
+      - condition: state
+        entity: input_select.epark_stage
+        state: confirm
+    card:
+      type: vertical-stack
+      cards:
+        - type: markdown
+          content: >-
+            {% set m = states('input_text.epark_message').split('|') %}
+            <ha-alert alert-type="warning" title="Already has a permit"><b>{{ m[0] }}</b> is covered{% if m | length > 1 and m[1] %}
+            until <b>{{ m[1] }}</b>{% endif %}. Send another {{ m[2] if m | length > 2 else '' }} h permit?</ha-alert>
+        - type: horizontal-stack
+          cards:
+            - type: button
+              name: Cancel
+              icon: mdi:close
+              show_state: false
+              tap_action:
+                action: perform-action
+                perform_action: input_select.select_option
+                target:
+                  entity_id: input_select.epark_stage
+                data:
+                  option: idle
+            - type: button
+              name: Send another
+              icon: mdi:send-check
+              show_state: false
+              tap_action:
+                action: perform-action
+                perform_action: script.epark_issue_from_form
+                data:
+                  confirm: true
+
+  # status line
+  - type: markdown
+    content: >-
+      {% set st = states('input_select.epark_stage') %}{% set m = states('input_text.epark_message').split('|') %}
+      {% if st == 'sending' %}<ha-alert alert-type="info">Sending {{ m[1] if m | length > 1 else '' }} h for <b>{{ m[0] }}</b> …</ha-alert>
+      {% elif st == 'sent' %}<ha-alert alert-type="success"><b>{{ m[0] }}</b> · {{ m[2] if m | length > 2 else '' }} h · valid until <b>{{ m[1] if m | length > 1 else '' }}</b></ha-alert>
+      {% elif st == 'error' %}<ha-alert alert-type="error">{{ states('input_text.epark_message') }}</ha-alert>
+      {% else %}&nbsp;{% endif %}
+
+  # active permits, newest first
+  - type: markdown
+    content: |
+      #### Active permits
+      {% set permits = state_attr('sensor.active_guest_permits', 'permits') or [] -%}
+      {% if permits | length == 0 %}No active permits{% else -%}
+      {% for p in permits | sort(attribute='valid_from', reverse=true) -%}
+      {% set left = [0, as_timestamp(p.valid_to) - as_timestamp(now())] | max -%}
+      - **{{ p.plate }}** · {{ (left // 3600) | int }}h {{ '%02d' | format(((left % 3600) // 60) | int) }}m left · until {{ as_timestamp(p.valid_to) | timestamp_custom('%H:%M') }}{% if p.car %} · {{ p.car }}{% endif %}
+      {% endfor %}{% endif %}

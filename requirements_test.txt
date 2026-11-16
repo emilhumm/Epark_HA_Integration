@@ -1,0 +1,2 @@
+# Home Assistant's test harness for custom integrations (pins a matching homeassistant version)
+pytest-homeassistant-custom-component==0.13.375

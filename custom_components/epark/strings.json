@@ -1,0 +1,93 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Log in to e-park",
+        "description": "Enter the email and password you use in the e-park app. The default recipient gets the permit receipt when a service call names no e-mail or phone; the permit dispatcher example only asks for a phone number, so it needs the default e-mail.",
+        "data": {
+          "email": "E-mail",
+          "password": "Password",
+          "default_recipient_email": "Default recipient e-mail (optional)",
+          "default_recipient_phone": "Default recipient phone (optional)"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Re-authenticate e-park",
+        "description": "e-park rejected the stored password for {email}. Enter the current password of the e-park app.",
+        "data": {
+          "password": "Password"
+        }
+      },
+      "reconfigure": {
+        "title": "Default recipient",
+        "description": "Where the permit receipt goes when a service call names no e-mail or phone. Clear a field to remove that default.",
+        "data": {
+          "default_recipient_email": "Default recipient e-mail",
+          "default_recipient_phone": "Default recipient phone"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid email or password.",
+      "cannot_connect": "Could not reach api.e-park.dk.",
+      "unknown": "Unexpected error, see the Home Assistant log."
+    },
+    "abort": {
+      "already_configured": "This account is already set up.",
+      "reauth_successful": "The new password works; e-park is loading again.",
+      "reconfigure_successful": "Default recipient saved."
+    }
+  },
+  "services": {
+    "issue_permit": {
+      "name": "Issue guest permit",
+      "description": "Issue a temporary parking permit to a license plate.",
+      "fields": {
+        "license_plate": {
+          "name": "License plate",
+          "description": "Plate the permit will apply to (spaces are removed, upper-cased)."
+        },
+        "duration_minutes": {
+          "name": "Duration (minutes)",
+          "description": "How long the permit should be valid for (1-1440)."
+        },
+        "email": {
+          "name": "Recipient e-mail",
+          "description": "E-mail address for the permit receipt (falls back to the default recipient)."
+        },
+        "phone": {
+          "name": "Recipient phone",
+          "description": "Phone number for the SMS receipt (falls back to the default recipient)."
+        },
+        "note": {
+          "name": "Note",
+          "description": "Optional short note on the permit."
+        },
+        "pool_id": {
+          "name": "Pool id",
+          "description": "Specific guest pool id (only needed with more than one pool; default: the first)."
+        }
+      }
+    },
+    "stop_permit": {
+      "name": "Stop permit",
+      "description": "End an active permit early (only for pools that allow early stop).",
+      "fields": {
+        "reference_number": {
+          "name": "Reference number",
+          "description": "Reference number of the permit (sensor.active_guest_permits)."
+        }
+      }
+    },
+    "lookup_plate": {
+      "name": "Look up license plate",
+      "description": "The car behind a Danish license plate (brand, model, colour, year) from the motor register.",
+      "fields": {
+        "license_plate": {
+          "name": "License plate",
+          "description": "Plate to look up (spaces are ignored)."
+        }
+      }
+    }
+  }
+}

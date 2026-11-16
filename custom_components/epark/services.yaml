@@ -1,0 +1,75 @@
+issue_permit:
+  name: Issue guest permit
+  description: Issue a temporary parking permit to a license plate.
+  fields:
+    license_plate:
+      name: License plate
+      description: Plate the permit will apply to (e.g. AB12345).
+      required: true
+      example: "AB12345"
+      selector:
+        text:
+    duration_minutes:
+      name: Duration (minutes)
+      description: How long the permit should be valid for.
+      required: true
+      example: 120
+      selector:
+        number:
+          min: 1
+          max: 1440
+          unit_of_measurement: min
+          mode: box
+    email:
+      name: Recipient email
+      description: Email address for the permit receipt (falls back to integration default).
+      required: false
+      example: "guest@example.com"
+      selector:
+        text:
+    phone:
+      name: Recipient phone
+      description: Phone number for SMS receipt (falls back to integration default).
+      required: false
+      example: "12345678"
+      selector:
+        text:
+    note:
+      name: Note
+      description: Optional short note on the permit.
+      required: false
+      selector:
+        text:
+    pool_id:
+      name: Pool id
+      description: Specific t-pool id (only needed if you have more than one).
+      required: false
+      selector:
+        number:
+          mode: box
+
+stop_permit:
+  name: Stop permit
+  description: Revoke an active permit (only works if the pool allows early stop).
+  fields:
+    reference_number:
+      name: Reference number
+      description: Reference number of the permit to stop.
+      required: true
+      selector:
+        number:
+          mode: box
+
+lookup_plate:
+  name: Look up license plate
+  description: >-
+    The car behind a Danish license plate from the motor register (brand, model, variant, body, colour, year), as
+    the e-park app shows it. Returns a response (found false for an unknown plate).
+  fields:
+    license_plate:
+      name: License plate
+      description: Plate to look up (spaces are ignored).
+      required: true
+      example: "AB12345"
+      selector:
+        text:

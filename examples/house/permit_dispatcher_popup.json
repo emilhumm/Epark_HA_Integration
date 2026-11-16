@@ -1,0 +1,1002 @@
+{
+ "_about": "Reference: the PERMIT DISPATCHER as it runs on the original install - a browser_mod popup opened by a tile tap_action (this object). Needs HACS cards custom:button-card, custom:stack-in-card, card-mod and the browser_mod integration; the card_mod Jinja blocks marked skin-* read input_select.card_skin (that install's skin switcher) - delete those blocks or define the helper. The core-cards version in examples/dashboard_permit_dispatcher.yaml does the same without any of this.",
+ "tap_action": {
+  "action": "fire-dom-event",
+  "browser_mod": {
+   "service": "browser_mod.popup",
+   "data": {
+    "title": "",
+    "content": {
+     "type": "custom:stack-in-card",
+     "mode": "vertical",
+     "card_mod": {
+      "style": "/* skin-popup */\n{% set skin = states('input_select.card_skin') %}\nha-card {\n  background: {% if skin == 'Glass' %}rgba(255,255,255,0.02){% elif skin == 'Poster' %}radial-gradient(120% 100% at 50% 0%, rgba(255,255,255,0.065), rgba(255,255,255,0.008) 65%){% elif skin == 'Ember' %}radial-gradient(circle at top right, rgba(224,175,104,0.10), transparent 60%), linear-gradient(180deg, rgb(23,17,10) 0%, rgb(12,8,5) 100%){% elif skin == 'Violet' %}radial-gradient(circle at top right, rgba(187,154,247,0.10), transparent 60%), linear-gradient(180deg, rgb(16,13,25) 0%, rgb(7,5,12) 100%){% elif skin == 'Aurora' %}radial-gradient(circle at 12% -10%, rgba(0,188,212,0.14), transparent 45%), radial-gradient(circle at 88% -10%, rgba(187,154,247,0.13), transparent 45%), linear-gradient(180deg, rgb(9,12,19) 0%, rgb(4,5,10) 100%){% elif skin == 'Sunset' %}radial-gradient(circle at 12% -10%, rgba(224,175,104,0.14), transparent 45%), radial-gradient(circle at 88% -10%, rgba(247,118,142,0.13), transparent 45%), linear-gradient(180deg, rgb(19,13,11) 0%, rgb(9,6,5) 100%){% elif skin == 'Lagoon' %}radial-gradient(circle at 12% -10%, rgba(115,218,202,0.14), transparent 45%), radial-gradient(circle at 88% -10%, rgba(122,162,247,0.13), transparent 45%), linear-gradient(180deg, rgb(7,15,17) 0%, rgb(3,7,9) 100%){% elif skin == 'Citrus' %}radial-gradient(circle at 12% -10%, rgba(240,203,104,0.14), transparent 45%), radial-gradient(circle at 88% -10%, rgba(158,206,106,0.13), transparent 45%), linear-gradient(180deg, rgb(15,16,9) 0%, rgb(7,8,4) 100%){% elif skin == 'Watermelon' %}radial-gradient(circle at 12% -10%, rgba(244,124,178,0.14), transparent 45%), radial-gradient(circle at 88% -10%, rgba(158,206,106,0.13), transparent 45%), linear-gradient(180deg, rgb(15,12,14) 0%, rgb(6,5,6) 100%){% elif skin == 'Orchid' %}radial-gradient(circle at 12% -10%, rgba(247,118,142,0.14), transparent 45%), radial-gradient(circle at 88% -10%, rgba(187,154,247,0.13), transparent 45%), linear-gradient(180deg, rgb(17,11,19) 0%, rgb(8,5,10) 100%){% elif skin == 'Reef' %}radial-gradient(circle at 12% -10%, rgba(255,158,100,0.14), transparent 45%), radial-gradient(circle at 88% -10%, rgba(115,218,202,0.13), transparent 45%), linear-gradient(180deg, rgb(13,14,14) 0%, rgb(5,7,7) 100%){% elif skin == 'Frost' %}radial-gradient(circle at 12% -10%, rgba(125,207,255,0.12), transparent 45%), radial-gradient(circle at 88% -10%, rgba(192,202,245,0.11), transparent 45%), linear-gradient(180deg, rgb(10,13,18) 0%, rgb(4,6,9) 100%){% elif skin == 'Horizon' %}radial-gradient(130% 80% at 50% 118%, rgba(122,162,247,0.16), transparent 60%), linear-gradient(180deg, rgb(5,7,11) 0%, rgb(9,12,18) 100%){% elif skin == 'Neon Pink' %}linear-gradient(180deg, rgba(247,118,142,0.04) 0%, rgba(0,0,0,0.25) 100%){% elif skin == 'Neon Green' %}linear-gradient(180deg, rgba(158,206,106,0.04) 0%, rgba(0,0,0,0.25) 100%){% elif skin == 'Etched' %}linear-gradient(180deg, rgb(6,7,9) 0%, rgb(10,12,14) 100%){% elif skin == 'Obsidian' %}linear-gradient(180deg, rgb(2,2,3) 0%, rgb(0,0,0) 100%){% elif skin == 'Nebula' %}radial-gradient(130% 110% at 100% 100%, rgba(150,140,235,0.16), transparent 55%), linear-gradient(160deg, rgb(6,4,36) 0%, rgb(14,12,44) 40%, rgb(24,23,56) 100%){% else %}radial-gradient(circle at top right, rgba(0,188,212,0.08), transparent 60%), linear-gradient(180deg, rgb(7,15,20) 0%, rgb(3,8,11) 100%){% endif %} !important;\n  backdrop-filter: {% if skin == 'Glass' %}blur(20px){% elif skin == 'Poster' %}blur(24px) saturate(1.3){% elif skin == 'Ember' %}none{% elif skin == 'Violet' %}none{% elif skin == 'Aurora' %}none{% elif skin == 'Sunset' %}none{% elif skin == 'Lagoon' %}none{% elif skin == 'Citrus' %}none{% elif skin == 'Watermelon' %}none{% elif skin == 'Orchid' %}none{% elif skin == 'Reef' %}none{% elif skin == 'Frost' %}none{% elif skin == 'Horizon' %}none{% elif skin == 'Neon Pink' %}blur(6px){% elif skin == 'Neon Green' %}blur(6px){% elif skin == 'Etched' %}none{% elif skin == 'Obsidian' %}none{% elif skin == 'Nebula' %}none{% else %}none{% endif %} !important;\n  border: 1px solid {% if skin == 'Glass' %}rgba(255,255,255,0.04){% elif skin == 'Poster' %}rgba(255,255,255,0.06){% elif skin == 'Ember' %}rgba(224,175,104,0.20){% elif skin == 'Violet' %}rgba(187,154,247,0.20){% elif skin == 'Aurora' %}rgba(140,170,240,0.20){% elif skin == 'Sunset' %}rgba(236,146,123,0.20){% elif skin == 'Lagoon' %}rgba(118,190,224,0.20){% elif skin == 'Citrus' %}rgba(199,205,105,0.20){% elif skin == 'Watermelon' %}rgba(201,165,142,0.20){% elif skin == 'Orchid' %}rgba(217,136,194,0.20){% elif skin == 'Reef' %}rgba(185,188,151,0.20){% elif skin == 'Frost' %}rgba(158,204,250,0.18){% elif skin == 'Horizon' %}rgba(122,162,247,0.16){% elif skin == 'Neon Pink' %}rgba(247,118,142,0.55){% elif skin == 'Neon Green' %}rgba(158,206,106,0.55){% elif skin == 'Etched' %}rgba(255,255,255,0.05){% elif skin == 'Obsidian' %}transparent{% elif skin == 'Nebula' %}rgba(160,155,215,0.60){% else %}rgba(0,188,212,0.18){% endif %} !important;\n  border-radius: 22px;\n  overflow: hidden;\n  position: relative;\n  box-shadow: {% if skin == 'Glass' %}none{% elif skin == 'Poster' %}0 8px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.15){% elif skin == 'Ember' %}0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05){% elif skin == 'Violet' %}0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05){% elif skin == 'Aurora' %}0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06){% elif skin == 'Sunset' %}0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06){% elif skin == 'Lagoon' %}0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06){% elif skin == 'Citrus' %}0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06){% elif skin == 'Watermelon' %}0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06){% elif skin == 'Orchid' %}0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06){% elif skin == 'Reef' %}0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06){% elif skin == 'Frost' %}0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06){% elif skin == 'Horizon' %}0 8px 30px rgba(0,0,0,0.55), inset 0 -1px 0 rgba(122,162,247,0.16){% elif skin == 'Neon Pink' %}0 0 16px rgba(247,118,142,0.22), inset 0 0 18px rgba(247,118,142,0.07){% elif skin == 'Neon Green' %}0 0 16px rgba(158,206,106,0.22), inset 0 0 18px rgba(158,206,106,0.07){% elif skin == 'Etched' %}inset 0 3px 10px rgba(0,0,0,0.65), inset 0 -1px 0 rgba(255,255,255,0.05){% elif skin == 'Obsidian' %}0 12px 36px rgba(0,0,0,0.75), 0 2px 6px rgba(0,0,0,0.6){% elif skin == 'Nebula' %}0 8px 24px rgba(0,0,0,0.25){% else %}0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05){% endif %} !important;\n}\nha-card::before {\n  content: \"\";\n  position: absolute;\n  top: 0; left: 0; right: 0;\n  height: 1px;\n  background: {% if skin == 'Glass' %}none{% elif skin == 'Poster' %}linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent){% elif skin == 'Ember' %}linear-gradient(90deg, transparent, rgba(224,175,104,0.85), transparent){% elif skin == 'Violet' %}linear-gradient(90deg, transparent, rgba(187,154,247,0.85), transparent){% elif skin == 'Aurora' %}linear-gradient(90deg, transparent, rgba(0,188,212,0.85) 35%, rgba(187,154,247,0.85) 65%, transparent){% elif skin == 'Sunset' %}linear-gradient(90deg, transparent, rgba(224,175,104,0.85) 35%, rgba(247,118,142,0.85) 65%, transparent){% elif skin == 'Lagoon' %}linear-gradient(90deg, transparent, rgba(115,218,202,0.85) 35%, rgba(122,162,247,0.85) 65%, transparent){% elif skin == 'Citrus' %}linear-gradient(90deg, transparent, rgba(240,203,104,0.85) 35%, rgba(158,206,106,0.85) 65%, transparent){% elif skin == 'Watermelon' %}linear-gradient(90deg, transparent, rgba(244,124,178,0.85) 35%, rgba(158,206,106,0.85) 65%, transparent){% elif skin == 'Orchid' %}linear-gradient(90deg, transparent, rgba(247,118,142,0.85) 35%, rgba(187,154,247,0.85) 65%, transparent){% elif skin == 'Reef' %}linear-gradient(90deg, transparent, rgba(255,158,100,0.85) 35%, rgba(115,218,202,0.85) 65%, transparent){% elif skin == 'Frost' %}linear-gradient(90deg, transparent, rgba(125,207,255,0.80) 35%, rgba(192,202,245,0.80) 65%, transparent){% elif skin == 'Horizon' %}linear-gradient(90deg, transparent, rgba(122,162,247,0.35), transparent){% elif skin == 'Neon Pink' %}linear-gradient(90deg, transparent, rgba(247,118,142,0.95), transparent){% elif skin == 'Neon Green' %}linear-gradient(90deg, transparent, rgba(158,206,106,0.95), transparent){% elif skin == 'Etched' %}linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent){% elif skin == 'Obsidian' %}none{% elif skin == 'Nebula' %}none{% else %}linear-gradient(90deg, transparent, rgba(0,188,212,0.8), transparent){% endif %};\n}\n@keyframes pd-pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }\n.pd-led {\n  display:inline-block;width:8px;height:8px;border-radius:50%;\n  background:#00bcd4;\n  box-shadow:0 0 10px #00bcd4, 0 0 4px #00bcd4;\n  animation: pd-pulse 2s infinite;\n}\n/* /skin-popup */\n"
+     },
+     "cards": [
+      {
+       "type": "markdown",
+       "content": "{% set h = states('sensor.guest_hours_left_this_month') %}<div><b>PERMIT DISPATCHER</b>{% if h not in ['unknown', 'unavailable', 'none', ''] %}{% set v = h | float(0) %}<small>{% if v < 8 %}<font color=\"#ef5350\">{% elif v < 16 %}<font color=\"#e0a040\">{% else %}<font color=\"#ffffff\">{% endif %}<b>{{ '%g' | format(v) }} h</b></font> left<span> this month</span></small>{% endif %}</div>",
+       "card_mod": {
+        "style": {
+         ".": "ha-card { background: transparent !important; box-shadow: none !important; border: none !important; padding: 18px 20px 6px !important; }",
+         "ha-markdown$": "ha-markdown-element > div { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; padding: 4px 4px 2px; } ha-markdown-element > div > b { color: rgba(255,255,255,0.95); font-size: 15px; font-weight: 600; letter-spacing: 3px; } ha-markdown-element small { font-size: 11px; letter-spacing: 1px; color: rgba(255,255,255,0.45); white-space: nowrap; } ha-markdown-element small b { font-size: 15px; font-weight: 600; letter-spacing: 0.5px; } @media (max-width: 450px) { ha-markdown-element small span { display: none; } }"
+        }
+       }
+      },
+      {
+       "type": "grid",
+       "columns": 5,
+       "square": false,
+       "cards": [
+        {
+         "type": "custom:button-card",
+         "name": "2h",
+         "tap_action": {
+          "action": "perform-action",
+          "perform_action": "input_select.select_option",
+          "target": {
+           "entity_id": "input_select.epark_duration_hours"
+          },
+          "data": {
+           "option": "2"
+          }
+         },
+         "show_icon": false,
+         "state": [
+          {
+           "value": "2",
+           "styles": {
+            "card": [
+             {
+              "background": "linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05))"
+             },
+             {
+              "border": "1px solid rgba(255,255,255,0.45)"
+             },
+             {
+              "box-shadow": "0 0 16px rgba(255,255,255,0.15)"
+             }
+            ],
+            "name": [
+             {
+              "color": "#fff"
+             },
+             {
+              "text-shadow": "0 0 8px rgba(255,255,255,0.50)"
+             }
+            ]
+           }
+          }
+         ],
+         "styles": {
+          "card": [
+           {
+            "background": "rgba(255,255,255,0.03)"
+           },
+           {
+            "border": "1px solid rgba(255,255,255,0.07)"
+           },
+           {
+            "border-radius": "14px"
+           },
+           {
+            "padding": "16px 4px"
+           },
+           {
+            "height": "auto"
+           },
+           {
+            "transition": "all 0.25s ease"
+           },
+           {
+            "cursor": "pointer"
+           }
+          ],
+          "name": [
+           {
+            "font-size": "17px"
+           },
+           {
+            "font-weight": "600"
+           },
+           {
+            "letter-spacing": "1px"
+           },
+           {
+            "color": "rgba(255,255,255,0.72)"
+           }
+          ]
+         },
+         "card_mod": {
+          "style": "ha-card {\n  border-radius: 14px !important; --ha-card-border-radius: 14px !important; overflow: hidden !important;\n}\n/* skin-period */\n{% set skin = states('input_select.card_skin') %}\n{% set on = is_state('input_select.epark_duration_hours', '2') %}\nha-card {\n  background: {% if on %}{% if skin == 'Glass' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Poster' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Ember' %}linear-gradient(135deg, rgba(224,175,104,0.28), rgba(224,175,104,0.07)){% elif skin == 'Violet' %}linear-gradient(135deg, rgba(187,154,247,0.28), rgba(187,154,247,0.07)){% elif skin == 'Aurora' %}linear-gradient(135deg, rgba(150,165,240,0.28), rgba(150,165,240,0.07)){% elif skin == 'Sunset' %}linear-gradient(135deg, rgba(236,146,123,0.28), rgba(236,146,123,0.07)){% elif skin == 'Lagoon' %}linear-gradient(135deg, rgba(118,190,224,0.28), rgba(118,190,224,0.07)){% elif skin == 'Citrus' %}linear-gradient(135deg, rgba(199,205,105,0.28), rgba(199,205,105,0.07)){% elif skin == 'Watermelon' %}linear-gradient(135deg, rgba(201,165,142,0.28), rgba(201,165,142,0.07)){% elif skin == 'Orchid' %}linear-gradient(135deg, rgba(217,136,194,0.28), rgba(217,136,194,0.07)){% elif skin == 'Reef' %}linear-gradient(135deg, rgba(185,188,151,0.28), rgba(185,188,151,0.07)){% elif skin == 'Frost' %}linear-gradient(135deg, rgba(158,204,250,0.28), rgba(158,204,250,0.07)){% elif skin == 'Horizon' %}linear-gradient(135deg, rgba(122,162,247,0.28), rgba(122,162,247,0.07)){% elif skin == 'Neon Pink' %}linear-gradient(135deg, rgba(247,118,142,0.28), rgba(247,118,142,0.07)){% elif skin == 'Neon Green' %}linear-gradient(135deg, rgba(158,206,106,0.28), rgba(158,206,106,0.07)){% elif skin == 'Etched' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Obsidian' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Nebula' %}linear-gradient(135deg, rgba(124,112,226,0.28), rgba(124,112,226,0.07)){% else %}linear-gradient(135deg, rgba(0,188,212,0.28), rgba(0,188,212,0.07)){% endif %}{% else %}rgba(255,255,255,0.03){% endif %} !important;\n  border: 1px solid {% if on %}{% if skin == 'Glass' %}rgba(255,255,255,0.45){% elif skin == 'Poster' %}rgba(255,255,255,0.45){% elif skin == 'Ember' %}rgba(224,175,104,0.65){% elif skin == 'Violet' %}rgba(187,154,247,0.65){% elif skin == 'Aurora' %}rgba(150,165,240,0.65){% elif skin == 'Sunset' %}rgba(236,146,123,0.65){% elif skin == 'Lagoon' %}rgba(118,190,224,0.65){% elif skin == 'Citrus' %}rgba(199,205,105,0.65){% elif skin == 'Watermelon' %}rgba(201,165,142,0.65){% elif skin == 'Orchid' %}rgba(217,136,194,0.65){% elif skin == 'Reef' %}rgba(185,188,151,0.65){% elif skin == 'Frost' %}rgba(158,204,250,0.65){% elif skin == 'Horizon' %}rgba(122,162,247,0.65){% elif skin == 'Neon Pink' %}rgba(247,118,142,0.65){% elif skin == 'Neon Green' %}rgba(158,206,106,0.65){% elif skin == 'Etched' %}rgba(255,255,255,0.45){% elif skin == 'Obsidian' %}rgba(255,255,255,0.45){% elif skin == 'Nebula' %}rgba(124,112,226,0.65){% else %}rgba(0,188,212,0.65){% endif %}{% else %}rgba(255,255,255,0.07){% endif %} !important;\n  box-shadow: {% if on %}{% if skin == 'Glass' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Poster' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Ember' %}0 0 16px rgba(224,175,104,0.25){% elif skin == 'Violet' %}0 0 16px rgba(187,154,247,0.25){% elif skin == 'Aurora' %}0 0 16px rgba(150,165,240,0.25){% elif skin == 'Sunset' %}0 0 16px rgba(236,146,123,0.25){% elif skin == 'Lagoon' %}0 0 16px rgba(118,190,224,0.25){% elif skin == 'Citrus' %}0 0 16px rgba(199,205,105,0.25){% elif skin == 'Watermelon' %}0 0 16px rgba(201,165,142,0.25){% elif skin == 'Orchid' %}0 0 16px rgba(217,136,194,0.25){% elif skin == 'Reef' %}0 0 16px rgba(185,188,151,0.25){% elif skin == 'Frost' %}0 0 16px rgba(158,204,250,0.25){% elif skin == 'Horizon' %}0 0 16px rgba(122,162,247,0.25){% elif skin == 'Neon Pink' %}0 0 16px rgba(247,118,142,0.25){% elif skin == 'Neon Green' %}0 0 16px rgba(158,206,106,0.25){% elif skin == 'Etched' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Obsidian' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Nebula' %}0 0 16px rgba(124,112,226,0.25){% else %}0 0 16px rgba(0,188,212,0.25){% endif %}{% else %}none{% endif %} !important;\n}\n#name, div#name {\n  color: {% if on %}#fff{% else %}rgba(255,255,255,0.45){% endif %} !important;\n  text-shadow: {% if on %}{% if skin == 'Glass' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Poster' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Ember' %}0 0 8px rgba(224,175,104,0.8){% elif skin == 'Violet' %}0 0 8px rgba(187,154,247,0.8){% elif skin == 'Aurora' %}0 0 8px rgba(150,165,240,0.8){% elif skin == 'Sunset' %}0 0 8px rgba(236,146,123,0.8){% elif skin == 'Lagoon' %}0 0 8px rgba(118,190,224,0.8){% elif skin == 'Citrus' %}0 0 8px rgba(199,205,105,0.8){% elif skin == 'Watermelon' %}0 0 8px rgba(201,165,142,0.8){% elif skin == 'Orchid' %}0 0 8px rgba(217,136,194,0.8){% elif skin == 'Reef' %}0 0 8px rgba(185,188,151,0.8){% elif skin == 'Frost' %}0 0 8px rgba(158,204,250,0.8){% elif skin == 'Horizon' %}0 0 8px rgba(122,162,247,0.8){% elif skin == 'Neon Pink' %}0 0 8px rgba(247,118,142,0.8){% elif skin == 'Neon Green' %}0 0 8px rgba(158,206,106,0.8){% elif skin == 'Etched' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Obsidian' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Nebula' %}0 0 8px rgba(124,112,226,0.8){% else %}0 0 8px rgba(0,188,212,0.8){% endif %}{% else %}none{% endif %} !important;\n}\n/* /skin-period */\n"
+         },
+         "entity": "input_select.epark_duration_hours"
+        },
+        {
+         "type": "custom:button-card",
+         "name": "4h",
+         "tap_action": {
+          "action": "perform-action",
+          "perform_action": "input_select.select_option",
+          "target": {
+           "entity_id": "input_select.epark_duration_hours"
+          },
+          "data": {
+           "option": "4"
+          }
+         },
+         "show_icon": false,
+         "state": [
+          {
+           "value": "4",
+           "styles": {
+            "card": [
+             {
+              "background": "linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05))"
+             },
+             {
+              "border": "1px solid rgba(255,255,255,0.45)"
+             },
+             {
+              "box-shadow": "0 0 16px rgba(255,255,255,0.15)"
+             }
+            ],
+            "name": [
+             {
+              "color": "#fff"
+             },
+             {
+              "text-shadow": "0 0 8px rgba(255,255,255,0.50)"
+             }
+            ]
+           }
+          }
+         ],
+         "styles": {
+          "card": [
+           {
+            "background": "rgba(255,255,255,0.03)"
+           },
+           {
+            "border": "1px solid rgba(255,255,255,0.07)"
+           },
+           {
+            "border-radius": "14px"
+           },
+           {
+            "padding": "16px 4px"
+           },
+           {
+            "height": "auto"
+           },
+           {
+            "transition": "all 0.25s ease"
+           },
+           {
+            "cursor": "pointer"
+           }
+          ],
+          "name": [
+           {
+            "font-size": "17px"
+           },
+           {
+            "font-weight": "600"
+           },
+           {
+            "letter-spacing": "1px"
+           },
+           {
+            "color": "rgba(255,255,255,0.72)"
+           }
+          ]
+         },
+         "card_mod": {
+          "style": "ha-card {\n  border-radius: 14px !important; --ha-card-border-radius: 14px !important; overflow: hidden !important;\n}\n/* skin-period */\n{% set skin = states('input_select.card_skin') %}\n{% set on = is_state('input_select.epark_duration_hours', '4') %}\nha-card {\n  background: {% if on %}{% if skin == 'Glass' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Poster' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Ember' %}linear-gradient(135deg, rgba(224,175,104,0.28), rgba(224,175,104,0.07)){% elif skin == 'Violet' %}linear-gradient(135deg, rgba(187,154,247,0.28), rgba(187,154,247,0.07)){% elif skin == 'Aurora' %}linear-gradient(135deg, rgba(150,165,240,0.28), rgba(150,165,240,0.07)){% elif skin == 'Sunset' %}linear-gradient(135deg, rgba(236,146,123,0.28), rgba(236,146,123,0.07)){% elif skin == 'Lagoon' %}linear-gradient(135deg, rgba(118,190,224,0.28), rgba(118,190,224,0.07)){% elif skin == 'Citrus' %}linear-gradient(135deg, rgba(199,205,105,0.28), rgba(199,205,105,0.07)){% elif skin == 'Watermelon' %}linear-gradient(135deg, rgba(201,165,142,0.28), rgba(201,165,142,0.07)){% elif skin == 'Orchid' %}linear-gradient(135deg, rgba(217,136,194,0.28), rgba(217,136,194,0.07)){% elif skin == 'Reef' %}linear-gradient(135deg, rgba(185,188,151,0.28), rgba(185,188,151,0.07)){% elif skin == 'Frost' %}linear-gradient(135deg, rgba(158,204,250,0.28), rgba(158,204,250,0.07)){% elif skin == 'Horizon' %}linear-gradient(135deg, rgba(122,162,247,0.28), rgba(122,162,247,0.07)){% elif skin == 'Neon Pink' %}linear-gradient(135deg, rgba(247,118,142,0.28), rgba(247,118,142,0.07)){% elif skin == 'Neon Green' %}linear-gradient(135deg, rgba(158,206,106,0.28), rgba(158,206,106,0.07)){% elif skin == 'Etched' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Obsidian' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Nebula' %}linear-gradient(135deg, rgba(124,112,226,0.28), rgba(124,112,226,0.07)){% else %}linear-gradient(135deg, rgba(0,188,212,0.28), rgba(0,188,212,0.07)){% endif %}{% else %}rgba(255,255,255,0.03){% endif %} !important;\n  border: 1px solid {% if on %}{% if skin == 'Glass' %}rgba(255,255,255,0.45){% elif skin == 'Poster' %}rgba(255,255,255,0.45){% elif skin == 'Ember' %}rgba(224,175,104,0.65){% elif skin == 'Violet' %}rgba(187,154,247,0.65){% elif skin == 'Aurora' %}rgba(150,165,240,0.65){% elif skin == 'Sunset' %}rgba(236,146,123,0.65){% elif skin == 'Lagoon' %}rgba(118,190,224,0.65){% elif skin == 'Citrus' %}rgba(199,205,105,0.65){% elif skin == 'Watermelon' %}rgba(201,165,142,0.65){% elif skin == 'Orchid' %}rgba(217,136,194,0.65){% elif skin == 'Reef' %}rgba(185,188,151,0.65){% elif skin == 'Frost' %}rgba(158,204,250,0.65){% elif skin == 'Horizon' %}rgba(122,162,247,0.65){% elif skin == 'Neon Pink' %}rgba(247,118,142,0.65){% elif skin == 'Neon Green' %}rgba(158,206,106,0.65){% elif skin == 'Etched' %}rgba(255,255,255,0.45){% elif skin == 'Obsidian' %}rgba(255,255,255,0.45){% elif skin == 'Nebula' %}rgba(124,112,226,0.65){% else %}rgba(0,188,212,0.65){% endif %}{% else %}rgba(255,255,255,0.07){% endif %} !important;\n  box-shadow: {% if on %}{% if skin == 'Glass' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Poster' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Ember' %}0 0 16px rgba(224,175,104,0.25){% elif skin == 'Violet' %}0 0 16px rgba(187,154,247,0.25){% elif skin == 'Aurora' %}0 0 16px rgba(150,165,240,0.25){% elif skin == 'Sunset' %}0 0 16px rgba(236,146,123,0.25){% elif skin == 'Lagoon' %}0 0 16px rgba(118,190,224,0.25){% elif skin == 'Citrus' %}0 0 16px rgba(199,205,105,0.25){% elif skin == 'Watermelon' %}0 0 16px rgba(201,165,142,0.25){% elif skin == 'Orchid' %}0 0 16px rgba(217,136,194,0.25){% elif skin == 'Reef' %}0 0 16px rgba(185,188,151,0.25){% elif skin == 'Frost' %}0 0 16px rgba(158,204,250,0.25){% elif skin == 'Horizon' %}0 0 16px rgba(122,162,247,0.25){% elif skin == 'Neon Pink' %}0 0 16px rgba(247,118,142,0.25){% elif skin == 'Neon Green' %}0 0 16px rgba(158,206,106,0.25){% elif skin == 'Etched' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Obsidian' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Nebula' %}0 0 16px rgba(124,112,226,0.25){% else %}0 0 16px rgba(0,188,212,0.25){% endif %}{% else %}none{% endif %} !important;\n}\n#name, div#name {\n  color: {% if on %}#fff{% else %}rgba(255,255,255,0.45){% endif %} !important;\n  text-shadow: {% if on %}{% if skin == 'Glass' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Poster' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Ember' %}0 0 8px rgba(224,175,104,0.8){% elif skin == 'Violet' %}0 0 8px rgba(187,154,247,0.8){% elif skin == 'Aurora' %}0 0 8px rgba(150,165,240,0.8){% elif skin == 'Sunset' %}0 0 8px rgba(236,146,123,0.8){% elif skin == 'Lagoon' %}0 0 8px rgba(118,190,224,0.8){% elif skin == 'Citrus' %}0 0 8px rgba(199,205,105,0.8){% elif skin == 'Watermelon' %}0 0 8px rgba(201,165,142,0.8){% elif skin == 'Orchid' %}0 0 8px rgba(217,136,194,0.8){% elif skin == 'Reef' %}0 0 8px rgba(185,188,151,0.8){% elif skin == 'Frost' %}0 0 8px rgba(158,204,250,0.8){% elif skin == 'Horizon' %}0 0 8px rgba(122,162,247,0.8){% elif skin == 'Neon Pink' %}0 0 8px rgba(247,118,142,0.8){% elif skin == 'Neon Green' %}0 0 8px rgba(158,206,106,0.8){% elif skin == 'Etched' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Obsidian' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Nebula' %}0 0 8px rgba(124,112,226,0.8){% else %}0 0 8px rgba(0,188,212,0.8){% endif %}{% else %}none{% endif %} !important;\n}\n/* /skin-period */\n"
+         },
+         "entity": "input_select.epark_duration_hours"
+        },
+        {
+         "type": "custom:button-card",
+         "name": "8h",
+         "tap_action": {
+          "action": "perform-action",
+          "perform_action": "input_select.select_option",
+          "target": {
+           "entity_id": "input_select.epark_duration_hours"
+          },
+          "data": {
+           "option": "8"
+          }
+         },
+         "show_icon": false,
+         "state": [
+          {
+           "value": "8",
+           "styles": {
+            "card": [
+             {
+              "background": "linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05))"
+             },
+             {
+              "border": "1px solid rgba(255,255,255,0.45)"
+             },
+             {
+              "box-shadow": "0 0 16px rgba(255,255,255,0.15)"
+             }
+            ],
+            "name": [
+             {
+              "color": "#fff"
+             },
+             {
+              "text-shadow": "0 0 8px rgba(255,255,255,0.50)"
+             }
+            ]
+           }
+          }
+         ],
+         "styles": {
+          "card": [
+           {
+            "background": "rgba(255,255,255,0.03)"
+           },
+           {
+            "border": "1px solid rgba(255,255,255,0.07)"
+           },
+           {
+            "border-radius": "14px"
+           },
+           {
+            "padding": "16px 4px"
+           },
+           {
+            "height": "auto"
+           },
+           {
+            "transition": "all 0.25s ease"
+           },
+           {
+            "cursor": "pointer"
+           }
+          ],
+          "name": [
+           {
+            "font-size": "17px"
+           },
+           {
+            "font-weight": "600"
+           },
+           {
+            "letter-spacing": "1px"
+           },
+           {
+            "color": "rgba(255,255,255,0.72)"
+           }
+          ]
+         },
+         "card_mod": {
+          "style": "ha-card {\n  border-radius: 14px !important; --ha-card-border-radius: 14px !important; overflow: hidden !important;\n}\n/* skin-period */\n{% set skin = states('input_select.card_skin') %}\n{% set on = is_state('input_select.epark_duration_hours', '8') %}\nha-card {\n  background: {% if on %}{% if skin == 'Glass' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Poster' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Ember' %}linear-gradient(135deg, rgba(224,175,104,0.28), rgba(224,175,104,0.07)){% elif skin == 'Violet' %}linear-gradient(135deg, rgba(187,154,247,0.28), rgba(187,154,247,0.07)){% elif skin == 'Aurora' %}linear-gradient(135deg, rgba(150,165,240,0.28), rgba(150,165,240,0.07)){% elif skin == 'Sunset' %}linear-gradient(135deg, rgba(236,146,123,0.28), rgba(236,146,123,0.07)){% elif skin == 'Lagoon' %}linear-gradient(135deg, rgba(118,190,224,0.28), rgba(118,190,224,0.07)){% elif skin == 'Citrus' %}linear-gradient(135deg, rgba(199,205,105,0.28), rgba(199,205,105,0.07)){% elif skin == 'Watermelon' %}linear-gradient(135deg, rgba(201,165,142,0.28), rgba(201,165,142,0.07)){% elif skin == 'Orchid' %}linear-gradient(135deg, rgba(217,136,194,0.28), rgba(217,136,194,0.07)){% elif skin == 'Reef' %}linear-gradient(135deg, rgba(185,188,151,0.28), rgba(185,188,151,0.07)){% elif skin == 'Frost' %}linear-gradient(135deg, rgba(158,204,250,0.28), rgba(158,204,250,0.07)){% elif skin == 'Horizon' %}linear-gradient(135deg, rgba(122,162,247,0.28), rgba(122,162,247,0.07)){% elif skin == 'Neon Pink' %}linear-gradient(135deg, rgba(247,118,142,0.28), rgba(247,118,142,0.07)){% elif skin == 'Neon Green' %}linear-gradient(135deg, rgba(158,206,106,0.28), rgba(158,206,106,0.07)){% elif skin == 'Etched' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Obsidian' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Nebula' %}linear-gradient(135deg, rgba(124,112,226,0.28), rgba(124,112,226,0.07)){% else %}linear-gradient(135deg, rgba(0,188,212,0.28), rgba(0,188,212,0.07)){% endif %}{% else %}rgba(255,255,255,0.03){% endif %} !important;\n  border: 1px solid {% if on %}{% if skin == 'Glass' %}rgba(255,255,255,0.45){% elif skin == 'Poster' %}rgba(255,255,255,0.45){% elif skin == 'Ember' %}rgba(224,175,104,0.65){% elif skin == 'Violet' %}rgba(187,154,247,0.65){% elif skin == 'Aurora' %}rgba(150,165,240,0.65){% elif skin == 'Sunset' %}rgba(236,146,123,0.65){% elif skin == 'Lagoon' %}rgba(118,190,224,0.65){% elif skin == 'Citrus' %}rgba(199,205,105,0.65){% elif skin == 'Watermelon' %}rgba(201,165,142,0.65){% elif skin == 'Orchid' %}rgba(217,136,194,0.65){% elif skin == 'Reef' %}rgba(185,188,151,0.65){% elif skin == 'Frost' %}rgba(158,204,250,0.65){% elif skin == 'Horizon' %}rgba(122,162,247,0.65){% elif skin == 'Neon Pink' %}rgba(247,118,142,0.65){% elif skin == 'Neon Green' %}rgba(158,206,106,0.65){% elif skin == 'Etched' %}rgba(255,255,255,0.45){% elif skin == 'Obsidian' %}rgba(255,255,255,0.45){% elif skin == 'Nebula' %}rgba(124,112,226,0.65){% else %}rgba(0,188,212,0.65){% endif %}{% else %}rgba(255,255,255,0.07){% endif %} !important;\n  box-shadow: {% if on %}{% if skin == 'Glass' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Poster' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Ember' %}0 0 16px rgba(224,175,104,0.25){% elif skin == 'Violet' %}0 0 16px rgba(187,154,247,0.25){% elif skin == 'Aurora' %}0 0 16px rgba(150,165,240,0.25){% elif skin == 'Sunset' %}0 0 16px rgba(236,146,123,0.25){% elif skin == 'Lagoon' %}0 0 16px rgba(118,190,224,0.25){% elif skin == 'Citrus' %}0 0 16px rgba(199,205,105,0.25){% elif skin == 'Watermelon' %}0 0 16px rgba(201,165,142,0.25){% elif skin == 'Orchid' %}0 0 16px rgba(217,136,194,0.25){% elif skin == 'Reef' %}0 0 16px rgba(185,188,151,0.25){% elif skin == 'Frost' %}0 0 16px rgba(158,204,250,0.25){% elif skin == 'Horizon' %}0 0 16px rgba(122,162,247,0.25){% elif skin == 'Neon Pink' %}0 0 16px rgba(247,118,142,0.25){% elif skin == 'Neon Green' %}0 0 16px rgba(158,206,106,0.25){% elif skin == 'Etched' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Obsidian' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Nebula' %}0 0 16px rgba(124,112,226,0.25){% else %}0 0 16px rgba(0,188,212,0.25){% endif %}{% else %}none{% endif %} !important;\n}\n#name, div#name {\n  color: {% if on %}#fff{% else %}rgba(255,255,255,0.45){% endif %} !important;\n  text-shadow: {% if on %}{% if skin == 'Glass' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Poster' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Ember' %}0 0 8px rgba(224,175,104,0.8){% elif skin == 'Violet' %}0 0 8px rgba(187,154,247,0.8){% elif skin == 'Aurora' %}0 0 8px rgba(150,165,240,0.8){% elif skin == 'Sunset' %}0 0 8px rgba(236,146,123,0.8){% elif skin == 'Lagoon' %}0 0 8px rgba(118,190,224,0.8){% elif skin == 'Citrus' %}0 0 8px rgba(199,205,105,0.8){% elif skin == 'Watermelon' %}0 0 8px rgba(201,165,142,0.8){% elif skin == 'Orchid' %}0 0 8px rgba(217,136,194,0.8){% elif skin == 'Reef' %}0 0 8px rgba(185,188,151,0.8){% elif skin == 'Frost' %}0 0 8px rgba(158,204,250,0.8){% elif skin == 'Horizon' %}0 0 8px rgba(122,162,247,0.8){% elif skin == 'Neon Pink' %}0 0 8px rgba(247,118,142,0.8){% elif skin == 'Neon Green' %}0 0 8px rgba(158,206,106,0.8){% elif skin == 'Etched' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Obsidian' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Nebula' %}0 0 8px rgba(124,112,226,0.8){% else %}0 0 8px rgba(0,188,212,0.8){% endif %}{% else %}none{% endif %} !important;\n}\n/* /skin-period */\n"
+         },
+         "entity": "input_select.epark_duration_hours"
+        },
+        {
+         "type": "custom:button-card",
+         "name": "12h",
+         "tap_action": {
+          "action": "perform-action",
+          "perform_action": "input_select.select_option",
+          "target": {
+           "entity_id": "input_select.epark_duration_hours"
+          },
+          "data": {
+           "option": "12"
+          }
+         },
+         "show_icon": false,
+         "state": [
+          {
+           "value": "12",
+           "styles": {
+            "card": [
+             {
+              "background": "linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05))"
+             },
+             {
+              "border": "1px solid rgba(255,255,255,0.45)"
+             },
+             {
+              "box-shadow": "0 0 16px rgba(255,255,255,0.15)"
+             }
+            ],
+            "name": [
+             {
+              "color": "#fff"
+             },
+             {
+              "text-shadow": "0 0 8px rgba(255,255,255,0.50)"
+             }
+            ]
+           }
+          }
+         ],
+         "styles": {
+          "card": [
+           {
+            "background": "rgba(255,255,255,0.03)"
+           },
+           {
+            "border": "1px solid rgba(255,255,255,0.07)"
+           },
+           {
+            "border-radius": "14px"
+           },
+           {
+            "padding": "16px 4px"
+           },
+           {
+            "height": "auto"
+           },
+           {
+            "transition": "all 0.25s ease"
+           },
+           {
+            "cursor": "pointer"
+           }
+          ],
+          "name": [
+           {
+            "font-size": "17px"
+           },
+           {
+            "font-weight": "600"
+           },
+           {
+            "letter-spacing": "1px"
+           },
+           {
+            "color": "rgba(255,255,255,0.72)"
+           }
+          ]
+         },
+         "card_mod": {
+          "style": "ha-card {\n  border-radius: 14px !important; --ha-card-border-radius: 14px !important; overflow: hidden !important;\n}\n/* skin-period */\n{% set skin = states('input_select.card_skin') %}\n{% set on = is_state('input_select.epark_duration_hours', '12') %}\nha-card {\n  background: {% if on %}{% if skin == 'Glass' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Poster' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Ember' %}linear-gradient(135deg, rgba(224,175,104,0.28), rgba(224,175,104,0.07)){% elif skin == 'Violet' %}linear-gradient(135deg, rgba(187,154,247,0.28), rgba(187,154,247,0.07)){% elif skin == 'Aurora' %}linear-gradient(135deg, rgba(150,165,240,0.28), rgba(150,165,240,0.07)){% elif skin == 'Sunset' %}linear-gradient(135deg, rgba(236,146,123,0.28), rgba(236,146,123,0.07)){% elif skin == 'Lagoon' %}linear-gradient(135deg, rgba(118,190,224,0.28), rgba(118,190,224,0.07)){% elif skin == 'Citrus' %}linear-gradient(135deg, rgba(199,205,105,0.28), rgba(199,205,105,0.07)){% elif skin == 'Watermelon' %}linear-gradient(135deg, rgba(201,165,142,0.28), rgba(201,165,142,0.07)){% elif skin == 'Orchid' %}linear-gradient(135deg, rgba(217,136,194,0.28), rgba(217,136,194,0.07)){% elif skin == 'Reef' %}linear-gradient(135deg, rgba(185,188,151,0.28), rgba(185,188,151,0.07)){% elif skin == 'Frost' %}linear-gradient(135deg, rgba(158,204,250,0.28), rgba(158,204,250,0.07)){% elif skin == 'Horizon' %}linear-gradient(135deg, rgba(122,162,247,0.28), rgba(122,162,247,0.07)){% elif skin == 'Neon Pink' %}linear-gradient(135deg, rgba(247,118,142,0.28), rgba(247,118,142,0.07)){% elif skin == 'Neon Green' %}linear-gradient(135deg, rgba(158,206,106,0.28), rgba(158,206,106,0.07)){% elif skin == 'Etched' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Obsidian' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Nebula' %}linear-gradient(135deg, rgba(124,112,226,0.28), rgba(124,112,226,0.07)){% else %}linear-gradient(135deg, rgba(0,188,212,0.28), rgba(0,188,212,0.07)){% endif %}{% else %}rgba(255,255,255,0.03){% endif %} !important;\n  border: 1px solid {% if on %}{% if skin == 'Glass' %}rgba(255,255,255,0.45){% elif skin == 'Poster' %}rgba(255,255,255,0.45){% elif skin == 'Ember' %}rgba(224,175,104,0.65){% elif skin == 'Violet' %}rgba(187,154,247,0.65){% elif skin == 'Aurora' %}rgba(150,165,240,0.65){% elif skin == 'Sunset' %}rgba(236,146,123,0.65){% elif skin == 'Lagoon' %}rgba(118,190,224,0.65){% elif skin == 'Citrus' %}rgba(199,205,105,0.65){% elif skin == 'Watermelon' %}rgba(201,165,142,0.65){% elif skin == 'Orchid' %}rgba(217,136,194,0.65){% elif skin == 'Reef' %}rgba(185,188,151,0.65){% elif skin == 'Frost' %}rgba(158,204,250,0.65){% elif skin == 'Horizon' %}rgba(122,162,247,0.65){% elif skin == 'Neon Pink' %}rgba(247,118,142,0.65){% elif skin == 'Neon Green' %}rgba(158,206,106,0.65){% elif skin == 'Etched' %}rgba(255,255,255,0.45){% elif skin == 'Obsidian' %}rgba(255,255,255,0.45){% elif skin == 'Nebula' %}rgba(124,112,226,0.65){% else %}rgba(0,188,212,0.65){% endif %}{% else %}rgba(255,255,255,0.07){% endif %} !important;\n  box-shadow: {% if on %}{% if skin == 'Glass' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Poster' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Ember' %}0 0 16px rgba(224,175,104,0.25){% elif skin == 'Violet' %}0 0 16px rgba(187,154,247,0.25){% elif skin == 'Aurora' %}0 0 16px rgba(150,165,240,0.25){% elif skin == 'Sunset' %}0 0 16px rgba(236,146,123,0.25){% elif skin == 'Lagoon' %}0 0 16px rgba(118,190,224,0.25){% elif skin == 'Citrus' %}0 0 16px rgba(199,205,105,0.25){% elif skin == 'Watermelon' %}0 0 16px rgba(201,165,142,0.25){% elif skin == 'Orchid' %}0 0 16px rgba(217,136,194,0.25){% elif skin == 'Reef' %}0 0 16px rgba(185,188,151,0.25){% elif skin == 'Frost' %}0 0 16px rgba(158,204,250,0.25){% elif skin == 'Horizon' %}0 0 16px rgba(122,162,247,0.25){% elif skin == 'Neon Pink' %}0 0 16px rgba(247,118,142,0.25){% elif skin == 'Neon Green' %}0 0 16px rgba(158,206,106,0.25){% elif skin == 'Etched' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Obsidian' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Nebula' %}0 0 16px rgba(124,112,226,0.25){% else %}0 0 16px rgba(0,188,212,0.25){% endif %}{% else %}none{% endif %} !important;\n}\n#name, div#name {\n  color: {% if on %}#fff{% else %}rgba(255,255,255,0.45){% endif %} !important;\n  text-shadow: {% if on %}{% if skin == 'Glass' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Poster' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Ember' %}0 0 8px rgba(224,175,104,0.8){% elif skin == 'Violet' %}0 0 8px rgba(187,154,247,0.8){% elif skin == 'Aurora' %}0 0 8px rgba(150,165,240,0.8){% elif skin == 'Sunset' %}0 0 8px rgba(236,146,123,0.8){% elif skin == 'Lagoon' %}0 0 8px rgba(118,190,224,0.8){% elif skin == 'Citrus' %}0 0 8px rgba(199,205,105,0.8){% elif skin == 'Watermelon' %}0 0 8px rgba(201,165,142,0.8){% elif skin == 'Orchid' %}0 0 8px rgba(217,136,194,0.8){% elif skin == 'Reef' %}0 0 8px rgba(185,188,151,0.8){% elif skin == 'Frost' %}0 0 8px rgba(158,204,250,0.8){% elif skin == 'Horizon' %}0 0 8px rgba(122,162,247,0.8){% elif skin == 'Neon Pink' %}0 0 8px rgba(247,118,142,0.8){% elif skin == 'Neon Green' %}0 0 8px rgba(158,206,106,0.8){% elif skin == 'Etched' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Obsidian' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Nebula' %}0 0 8px rgba(124,112,226,0.8){% else %}0 0 8px rgba(0,188,212,0.8){% endif %}{% else %}none{% endif %} !important;\n}\n/* /skin-period */\n"
+         },
+         "entity": "input_select.epark_duration_hours"
+        },
+        {
+         "type": "custom:button-card",
+         "name": "24h",
+         "tap_action": {
+          "action": "perform-action",
+          "perform_action": "input_select.select_option",
+          "target": {
+           "entity_id": "input_select.epark_duration_hours"
+          },
+          "data": {
+           "option": "24"
+          }
+         },
+         "show_icon": false,
+         "state": [
+          {
+           "value": "24",
+           "styles": {
+            "card": [
+             {
+              "background": "linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05))"
+             },
+             {
+              "border": "1px solid rgba(255,255,255,0.45)"
+             },
+             {
+              "box-shadow": "0 0 16px rgba(255,255,255,0.15)"
+             }
+            ],
+            "name": [
+             {
+              "color": "#fff"
+             },
+             {
+              "text-shadow": "0 0 8px rgba(255,255,255,0.50)"
+             }
+            ]
+           }
+          }
+         ],
+         "styles": {
+          "card": [
+           {
+            "background": "rgba(255,255,255,0.03)"
+           },
+           {
+            "border": "1px solid rgba(255,255,255,0.07)"
+           },
+           {
+            "border-radius": "14px"
+           },
+           {
+            "padding": "16px 4px"
+           },
+           {
+            "height": "auto"
+           },
+           {
+            "transition": "all 0.25s ease"
+           },
+           {
+            "cursor": "pointer"
+           }
+          ],
+          "name": [
+           {
+            "font-size": "17px"
+           },
+           {
+            "font-weight": "600"
+           },
+           {
+            "letter-spacing": "1px"
+           },
+           {
+            "color": "rgba(255,255,255,0.72)"
+           }
+          ]
+         },
+         "card_mod": {
+          "style": "ha-card {\n  border-radius: 14px !important; --ha-card-border-radius: 14px !important; overflow: hidden !important;\n}\n/* skin-period */\n{% set skin = states('input_select.card_skin') %}\n{% set on = is_state('input_select.epark_duration_hours', '24') %}\nha-card {\n  background: {% if on %}{% if skin == 'Glass' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Poster' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Ember' %}linear-gradient(135deg, rgba(224,175,104,0.28), rgba(224,175,104,0.07)){% elif skin == 'Violet' %}linear-gradient(135deg, rgba(187,154,247,0.28), rgba(187,154,247,0.07)){% elif skin == 'Aurora' %}linear-gradient(135deg, rgba(150,165,240,0.28), rgba(150,165,240,0.07)){% elif skin == 'Sunset' %}linear-gradient(135deg, rgba(236,146,123,0.28), rgba(236,146,123,0.07)){% elif skin == 'Lagoon' %}linear-gradient(135deg, rgba(118,190,224,0.28), rgba(118,190,224,0.07)){% elif skin == 'Citrus' %}linear-gradient(135deg, rgba(199,205,105,0.28), rgba(199,205,105,0.07)){% elif skin == 'Watermelon' %}linear-gradient(135deg, rgba(201,165,142,0.28), rgba(201,165,142,0.07)){% elif skin == 'Orchid' %}linear-gradient(135deg, rgba(217,136,194,0.28), rgba(217,136,194,0.07)){% elif skin == 'Reef' %}linear-gradient(135deg, rgba(185,188,151,0.28), rgba(185,188,151,0.07)){% elif skin == 'Frost' %}linear-gradient(135deg, rgba(158,204,250,0.28), rgba(158,204,250,0.07)){% elif skin == 'Horizon' %}linear-gradient(135deg, rgba(122,162,247,0.28), rgba(122,162,247,0.07)){% elif skin == 'Neon Pink' %}linear-gradient(135deg, rgba(247,118,142,0.28), rgba(247,118,142,0.07)){% elif skin == 'Neon Green' %}linear-gradient(135deg, rgba(158,206,106,0.28), rgba(158,206,106,0.07)){% elif skin == 'Etched' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Obsidian' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Nebula' %}linear-gradient(135deg, rgba(124,112,226,0.28), rgba(124,112,226,0.07)){% else %}linear-gradient(135deg, rgba(0,188,212,0.28), rgba(0,188,212,0.07)){% endif %}{% else %}rgba(255,255,255,0.03){% endif %} !important;\n  border: 1px solid {% if on %}{% if skin == 'Glass' %}rgba(255,255,255,0.45){% elif skin == 'Poster' %}rgba(255,255,255,0.45){% elif skin == 'Ember' %}rgba(224,175,104,0.65){% elif skin == 'Violet' %}rgba(187,154,247,0.65){% elif skin == 'Aurora' %}rgba(150,165,240,0.65){% elif skin == 'Sunset' %}rgba(236,146,123,0.65){% elif skin == 'Lagoon' %}rgba(118,190,224,0.65){% elif skin == 'Citrus' %}rgba(199,205,105,0.65){% elif skin == 'Watermelon' %}rgba(201,165,142,0.65){% elif skin == 'Orchid' %}rgba(217,136,194,0.65){% elif skin == 'Reef' %}rgba(185,188,151,0.65){% elif skin == 'Frost' %}rgba(158,204,250,0.65){% elif skin == 'Horizon' %}rgba(122,162,247,0.65){% elif skin == 'Neon Pink' %}rgba(247,118,142,0.65){% elif skin == 'Neon Green' %}rgba(158,206,106,0.65){% elif skin == 'Etched' %}rgba(255,255,255,0.45){% elif skin == 'Obsidian' %}rgba(255,255,255,0.45){% elif skin == 'Nebula' %}rgba(124,112,226,0.65){% else %}rgba(0,188,212,0.65){% endif %}{% else %}rgba(255,255,255,0.07){% endif %} !important;\n  box-shadow: {% if on %}{% if skin == 'Glass' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Poster' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Ember' %}0 0 16px rgba(224,175,104,0.25){% elif skin == 'Violet' %}0 0 16px rgba(187,154,247,0.25){% elif skin == 'Aurora' %}0 0 16px rgba(150,165,240,0.25){% elif skin == 'Sunset' %}0 0 16px rgba(236,146,123,0.25){% elif skin == 'Lagoon' %}0 0 16px rgba(118,190,224,0.25){% elif skin == 'Citrus' %}0 0 16px rgba(199,205,105,0.25){% elif skin == 'Watermelon' %}0 0 16px rgba(201,165,142,0.25){% elif skin == 'Orchid' %}0 0 16px rgba(217,136,194,0.25){% elif skin == 'Reef' %}0 0 16px rgba(185,188,151,0.25){% elif skin == 'Frost' %}0 0 16px rgba(158,204,250,0.25){% elif skin == 'Horizon' %}0 0 16px rgba(122,162,247,0.25){% elif skin == 'Neon Pink' %}0 0 16px rgba(247,118,142,0.25){% elif skin == 'Neon Green' %}0 0 16px rgba(158,206,106,0.25){% elif skin == 'Etched' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Obsidian' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Nebula' %}0 0 16px rgba(124,112,226,0.25){% else %}0 0 16px rgba(0,188,212,0.25){% endif %}{% else %}none{% endif %} !important;\n}\n#name, div#name {\n  color: {% if on %}#fff{% else %}rgba(255,255,255,0.45){% endif %} !important;\n  text-shadow: {% if on %}{% if skin == 'Glass' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Poster' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Ember' %}0 0 8px rgba(224,175,104,0.8){% elif skin == 'Violet' %}0 0 8px rgba(187,154,247,0.8){% elif skin == 'Aurora' %}0 0 8px rgba(150,165,240,0.8){% elif skin == 'Sunset' %}0 0 8px rgba(236,146,123,0.8){% elif skin == 'Lagoon' %}0 0 8px rgba(118,190,224,0.8){% elif skin == 'Citrus' %}0 0 8px rgba(199,205,105,0.8){% elif skin == 'Watermelon' %}0 0 8px rgba(201,165,142,0.8){% elif skin == 'Orchid' %}0 0 8px rgba(217,136,194,0.8){% elif skin == 'Reef' %}0 0 8px rgba(185,188,151,0.8){% elif skin == 'Frost' %}0 0 8px rgba(158,204,250,0.8){% elif skin == 'Horizon' %}0 0 8px rgba(122,162,247,0.8){% elif skin == 'Neon Pink' %}0 0 8px rgba(247,118,142,0.8){% elif skin == 'Neon Green' %}0 0 8px rgba(158,206,106,0.8){% elif skin == 'Etched' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Obsidian' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Nebula' %}0 0 8px rgba(124,112,226,0.8){% else %}0 0 8px rgba(0,188,212,0.8){% endif %}{% else %}none{% endif %} !important;\n}\n/* /skin-period */\n"
+         },
+         "entity": "input_select.epark_duration_hours"
+        }
+       ],
+       "card_mod": {
+        "style": "ha-card, :host, #root { background: transparent !important; box-shadow: none !important; border: none !important; border-radius: 0 !important; } :host { padding: 0 16px !important; display: block; } #root { --ha-card-border-radius: 14px; } #root > * { border-radius: 14px !important; overflow: hidden !important; --ha-card-border-radius: 14px !important; }"
+       }
+      },
+      {
+       "type": "grid",
+       "columns": 2,
+       "square": false,
+       "cards": [
+        {
+         "type": "vertical-stack",
+         "cards": [
+          {
+           "type": "entities",
+           "show_header_toggle": false,
+           "state_color": false,
+           "entities": [
+            {
+             "entity": "input_text.epark_plate",
+             "name": "License plate",
+             "icon": "mdi:car",
+             "card_mod": {
+              "style": {
+               "ha-input $ wa-input $": "[part~=base] { background: rgba(255,255,255,0.03) !important; border: 1px solid rgba(255,255,255,0.07) !important; border-radius: 14px !important; box-sizing: border-box !important; transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease; } [part~=base]::after, [part~=base]::before { display: none !important; } :host(:focus-within) [part~=base] { background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04)) !important; border-color: rgba(255,255,255,0.45) !important; box-shadow: 0 0 16px rgba(255,255,255,0.12) !important; } [part~=input] { color: #fff !important; font-weight: 600 !important; letter-spacing: 1px !important; } [part~=form-control-label] { color: rgba(255,255,255,0.45) !important; }"
+              }
+             }
+            },
+            {
+             "entity": "input_text.epark_phone",
+             "name": "Phone",
+             "icon": "mdi:cellphone-message",
+             "card_mod": {
+              "style": {
+               "ha-input $ wa-input $": "[part~=base] { background: rgba(255,255,255,0.03) !important; border: 1px solid rgba(255,255,255,0.07) !important; border-radius: 14px !important; box-sizing: border-box !important; transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease; } [part~=base]::after, [part~=base]::before { display: none !important; } :host(:focus-within) [part~=base] { background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04)) !important; border-color: rgba(255,255,255,0.45) !important; box-shadow: 0 0 16px rgba(255,255,255,0.12) !important; } [part~=input] { color: #fff !important; font-weight: 600 !important; letter-spacing: 1px !important; } [part~=form-control-label] { color: rgba(255,255,255,0.45) !important; }"
+              }
+             }
+            }
+           ],
+           "card_mod": {
+            "style": {
+             ".": "ha-card { background: transparent !important; box-shadow: none !important; border: none !important; padding: 4px 8px !important; --ha-color-form-background: transparent !important; --ha-color-form-background-hover: transparent !important; --ha-color-form-background-disabled: transparent !important; --mdc-text-field-fill-color: transparent !important; --mdc-text-field-idle-line-color: transparent !important; --mdc-text-field-hover-line-color: transparent !important; --mdc-text-field-focused-line-color: transparent !important; --mdc-text-field-disabled-line-color: transparent !important; --divider-color: transparent !important; } #states { display: flex !important; flex-direction: column !important; gap: 4px !important; } #states > * { background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 !important; margin: 0 !important; } #states state-badge, #states ha-state-icon { --state-icon-color: #00bcd4 !important; color: #00bcd4 !important; }",
+             "hui-input-text-entity-row": {
+              "$": "*, *::before, *::after { border: 0 !important; border-bottom: 0 !important; border-top: 0 !important; border-left: 0 !important; border-right: 0 !important; outline: none !important; box-shadow: none !important; background: transparent !important; } .mdc-line-ripple, .mdc-line-ripple::before, .mdc-line-ripple::after, .mdc-text-field__ripple { display: none !important; opacity: 0 !important; } input { background: transparent !important; border: 0 !important; outline: none !important; }",
+              "ha-textfield": {
+               "$": "*, *::before, *::after { border: 0 !important; border-bottom: 0 !important; border-top: 0 !important; border-left: 0 !important; border-right: 0 !important; outline: none !important; box-shadow: none !important; background: transparent !important; } .mdc-line-ripple, .mdc-line-ripple::before, .mdc-line-ripple::after, .mdc-text-field__ripple { display: none !important; opacity: 0 !important; } input { background: transparent !important; border: 0 !important; outline: none !important; }"
+              },
+              "ha-input": {
+               "$": "*, *::before, *::after { border: 0 !important; border-bottom: 0 !important; border-top: 0 !important; border-left: 0 !important; border-right: 0 !important; outline: none !important; box-shadow: none !important; background: transparent !important; } .mdc-line-ripple, .mdc-line-ripple::before, .mdc-line-ripple::after, .mdc-text-field__ripple { display: none !important; opacity: 0 !important; } input { background: transparent !important; border: 0 !important; outline: none !important; }"
+              },
+              "ha-textfield$ mwc-textfield": {
+               "$": "*, *::before, *::after { border: 0 !important; border-bottom: 0 !important; border-top: 0 !important; border-left: 0 !important; border-right: 0 !important; outline: none !important; box-shadow: none !important; background: transparent !important; } .mdc-line-ripple, .mdc-line-ripple::before, .mdc-line-ripple::after, .mdc-text-field__ripple { display: none !important; opacity: 0 !important; } input { background: transparent !important; border: 0 !important; outline: none !important; }"
+              }
+             },
+             "hui-generic-entity-row": {
+              "$": "*, *::before, *::after { border: 0 !important; border-bottom: 0 !important; border-top: 0 !important; border-left: 0 !important; border-right: 0 !important; outline: none !important; box-shadow: none !important; background: transparent !important; } .mdc-line-ripple, .mdc-line-ripple::before, .mdc-line-ripple::after, .mdc-text-field__ripple { display: none !important; opacity: 0 !important; } input { background: transparent !important; border: 0 !important; outline: none !important; }"
+             }
+            }
+           }
+          },
+          {
+           "type": "markdown",
+           "content": "{% set v = states('input_text.epark_vehicle').split('|') %}{% set st = v[0] %}{% set t = v[1] if v | length > 1 else '' %}<div>{% if st == 'ok' %}<ha-icon icon=\"mdi:car-side\"></ha-icon><b>{{ t }}</b>{% elif st == 'looking' %}<ha-icon icon=\"mdi:magnify\"></ha-icon><small>Looking up the car …</small>{% elif st == 'none' %}<ha-icon icon=\"mdi:alert-outline\"></ha-icon><font color=\"#e0a040\">Not in the motor register – check the plate</font>{% elif st == 'fail' %}<ha-icon icon=\"mdi:help-circle-outline\"></ha-icon><small>Car lookup failed</small>{% endif %}</div>",
+           "card_mod": {
+            "style": {
+             ".": "{% set st = states('input_text.epark_vehicle').split('|')[0] %}\nha-card { background: transparent !important; box-shadow: none !important; border: none !important; padding: 0 24px 4px 64px !important; margin: 0 !important; } ha-card > .card-content, .card-content { padding: 0 !important; } ha-markdown { display: block !important; padding: 0 !important; } :host { display: block; } ha-card { display: {{ 'block' if st in ['ok', 'looking', 'none', 'fail'] else 'none' }} !important; } @media (min-width: 451px) { ha-card { display: none !important; } }",
+             "ha-markdown$": "ha-markdown-element > div { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.75); } ha-icon { --mdc-icon-size: 18px; color: rgba(255,255,255,0.5); flex: 0 0 auto; } b { font-weight: 600; letter-spacing: 0.5px; color: rgba(255,255,255,0.9); } small { font-size: 12px; color: rgba(255,255,255,0.45); }"
+            }
+           }
+          }
+         ]
+        },
+        {
+         "type": "vertical-stack",
+         "cards": [
+          {
+           "type": "conditional",
+           "conditions": [
+            {
+             "condition": "state",
+             "entity": "input_select.epark_stage",
+             "state_not": [
+              "sending",
+              "sent",
+              "error",
+              "confirm"
+             ]
+            }
+           ],
+           "card": {
+            "type": "custom:button-card",
+            "name": "[[[ if (!window.__epkCommit2) { window.__epkCommit2 = 1; const h = (ev) => { const p = ev.composedPath ? ev.composedPath() : []; if (!p.some(n => { const t = n && n.tagName === 'BUTTON-CARD' && n._config && n._config.tap_action; return t && (t.perform_action === 'script.epark_issue_from_form' || (t.perform_action === 'input_select.select_option' && t.target && t.target.entity_id === 'input_select.epark_duration_hours')); })) return; let a = document.activeElement; while (a && a.shadowRoot && a.shadowRoot.activeElement) a = a.shadowRoot.activeElement; if (a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA') && a.blur) a.blur(); }; window.addEventListener('pointerdown', h, true); window.addEventListener('touchstart', h, {capture: true, passive: true}); } if (!window.__epkLive1) { window.__epkLive1 = 1; let tmr = null, seq = 0; window.addEventListener('input', (ev) => { const p = ev.composedPath ? ev.composedPath() : []; const row = p.find(n => n && n.tagName === 'HUI-INPUT-TEXT-ENTITY-ROW' && n._config && n._config.entity === 'input_text.epark_plate'); if (!row) return; const v = String((p[0] && p[0].value) || '').replace(/\\s+/g, '').toUpperCase(); clearTimeout(tmr); tmr = setTimeout(async () => { const ha = document.querySelector('home-assistant'); const hs = ha && ha.hass; if (!hs) return; const my = ++seq; const put = (x) => hs.callService('input_text', 'set_value', {entity_id: 'input_text.epark_vehicle', value: x}); if (v.length < 5 || !/^[A-Z0-9]+$/.test(v)) { put(''); return; } try { const r = await hs.callService('epark', 'lookup_plate', {license_plate: v}, undefined, false, true); if (my !== seq) return; const c = (r && r.response) || {}; put(c.found ? 'ok|' + [[c.brand, c.model].filter(Boolean).join(' '), c.color, c.year].filter(Boolean).join(' \\u00b7 ') : 'none|'); } catch (e) { if (my === seq) put('fail|'); } }, 700); }, true); } return '➤  DISPATCH PERMIT'; ]]]",
+            "show_icon": false,
+            "show_name": true,
+            "tap_action": {
+             "action": "perform-action",
+             "perform_action": "script.epark_issue_from_form",
+             "data": {}
+            },
+            "styles": {
+             "card": [
+              {
+               "padding": "0"
+              },
+              {
+               "height": "52px"
+              },
+              {
+               "cursor": "pointer"
+              },
+              {
+               "background": "transparent"
+              },
+              {
+               "border": "none"
+              },
+              {
+               "box-shadow": "none"
+              }
+             ],
+             "name": [
+              {
+               "color": "#fff"
+              },
+              {
+               "font-size": "14px"
+              },
+              {
+               "font-weight": "700"
+              },
+              {
+               "letter-spacing": "3px"
+              },
+              {
+               "white-space": "nowrap"
+              }
+             ]
+            },
+            "card_mod": {
+             "style": ":host { display: flex !important; justify-content: center !important; padding: 12px 0 6px !important; margin: 0 !important; } ha-card { background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%) !important; border-radius: 14px !important; --ha-card-background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%) !important; box-shadow: 0 4px 20px rgba(0,188,212,0.4), inset 0 1px 0 rgba(255,255,255,0.2) !important; border: 1px solid rgba(255,255,255,0.15) !important; min-height: 0 !important; height: 52px !important; width: 255px !important; max-width: 255px !important; flex: 0 0 auto !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; } #container { height: 100% !important; width: 100% !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; } #name, div#name { overflow: visible !important; text-overflow: clip !important; max-width: none !important; width: auto !important; white-space: nowrap !important; padding: 0 !important; margin: 0 !important; line-height: 1 !important; display: flex !important; align-items: center !important; justify-content: center !important; }\n/* epark-guard */\nha-card {\n  border-radius: 14px !important; --ha-card-border-radius: 14px !important; overflow: hidden !important;\n}\n/* skin-period */\n{% set skin = states('input_select.card_skin') %}\n{% set on = true %}\nha-card {\n  background: {% if on %}{% if skin == 'Glass' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Poster' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Ember' %}linear-gradient(135deg, rgba(224,175,104,0.28), rgba(224,175,104,0.07)){% elif skin == 'Violet' %}linear-gradient(135deg, rgba(187,154,247,0.28), rgba(187,154,247,0.07)){% elif skin == 'Aurora' %}linear-gradient(135deg, rgba(150,165,240,0.28), rgba(150,165,240,0.07)){% elif skin == 'Sunset' %}linear-gradient(135deg, rgba(236,146,123,0.28), rgba(236,146,123,0.07)){% elif skin == 'Lagoon' %}linear-gradient(135deg, rgba(118,190,224,0.28), rgba(118,190,224,0.07)){% elif skin == 'Citrus' %}linear-gradient(135deg, rgba(199,205,105,0.28), rgba(199,205,105,0.07)){% elif skin == 'Watermelon' %}linear-gradient(135deg, rgba(201,165,142,0.28), rgba(201,165,142,0.07)){% elif skin == 'Orchid' %}linear-gradient(135deg, rgba(217,136,194,0.28), rgba(217,136,194,0.07)){% elif skin == 'Reef' %}linear-gradient(135deg, rgba(185,188,151,0.28), rgba(185,188,151,0.07)){% elif skin == 'Frost' %}linear-gradient(135deg, rgba(158,204,250,0.28), rgba(158,204,250,0.07)){% elif skin == 'Horizon' %}linear-gradient(135deg, rgba(122,162,247,0.28), rgba(122,162,247,0.07)){% elif skin == 'Neon Pink' %}linear-gradient(135deg, rgba(247,118,142,0.28), rgba(247,118,142,0.07)){% elif skin == 'Neon Green' %}linear-gradient(135deg, rgba(158,206,106,0.28), rgba(158,206,106,0.07)){% elif skin == 'Etched' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Obsidian' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Nebula' %}linear-gradient(135deg, rgba(124,112,226,0.28), rgba(124,112,226,0.07)){% else %}linear-gradient(135deg, rgba(0,188,212,0.28), rgba(0,188,212,0.07)){% endif %}{% else %}rgba(255,255,255,0.03){% endif %} !important;\n  border: 1px solid {% if on %}{% if skin == 'Glass' %}rgba(255,255,255,0.45){% elif skin == 'Poster' %}rgba(255,255,255,0.45){% elif skin == 'Ember' %}rgba(224,175,104,0.65){% elif skin == 'Violet' %}rgba(187,154,247,0.65){% elif skin == 'Aurora' %}rgba(150,165,240,0.65){% elif skin == 'Sunset' %}rgba(236,146,123,0.65){% elif skin == 'Lagoon' %}rgba(118,190,224,0.65){% elif skin == 'Citrus' %}rgba(199,205,105,0.65){% elif skin == 'Watermelon' %}rgba(201,165,142,0.65){% elif skin == 'Orchid' %}rgba(217,136,194,0.65){% elif skin == 'Reef' %}rgba(185,188,151,0.65){% elif skin == 'Frost' %}rgba(158,204,250,0.65){% elif skin == 'Horizon' %}rgba(122,162,247,0.65){% elif skin == 'Neon Pink' %}rgba(247,118,142,0.65){% elif skin == 'Neon Green' %}rgba(158,206,106,0.65){% elif skin == 'Etched' %}rgba(255,255,255,0.45){% elif skin == 'Obsidian' %}rgba(255,255,255,0.45){% elif skin == 'Nebula' %}rgba(124,112,226,0.65){% else %}rgba(0,188,212,0.65){% endif %}{% else %}rgba(255,255,255,0.07){% endif %} !important;\n  box-shadow: {% if on %}{% if skin == 'Glass' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Poster' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Ember' %}0 0 16px rgba(224,175,104,0.25){% elif skin == 'Violet' %}0 0 16px rgba(187,154,247,0.25){% elif skin == 'Aurora' %}0 0 16px rgba(150,165,240,0.25){% elif skin == 'Sunset' %}0 0 16px rgba(236,146,123,0.25){% elif skin == 'Lagoon' %}0 0 16px rgba(118,190,224,0.25){% elif skin == 'Citrus' %}0 0 16px rgba(199,205,105,0.25){% elif skin == 'Watermelon' %}0 0 16px rgba(201,165,142,0.25){% elif skin == 'Orchid' %}0 0 16px rgba(217,136,194,0.25){% elif skin == 'Reef' %}0 0 16px rgba(185,188,151,0.25){% elif skin == 'Frost' %}0 0 16px rgba(158,204,250,0.25){% elif skin == 'Horizon' %}0 0 16px rgba(122,162,247,0.25){% elif skin == 'Neon Pink' %}0 0 16px rgba(247,118,142,0.25){% elif skin == 'Neon Green' %}0 0 16px rgba(158,206,106,0.25){% elif skin == 'Etched' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Obsidian' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Nebula' %}0 0 16px rgba(124,112,226,0.25){% else %}0 0 16px rgba(0,188,212,0.25){% endif %}{% else %}none{% endif %} !important;\n}\n#name, div#name {\n  color: {% if on %}#fff{% else %}rgba(255,255,255,0.45){% endif %} !important;\n  text-shadow: {% if on %}{% if skin == 'Glass' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Poster' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Ember' %}0 0 8px rgba(224,175,104,0.8){% elif skin == 'Violet' %}0 0 8px rgba(187,154,247,0.8){% elif skin == 'Aurora' %}0 0 8px rgba(150,165,240,0.8){% elif skin == 'Sunset' %}0 0 8px rgba(236,146,123,0.8){% elif skin == 'Lagoon' %}0 0 8px rgba(118,190,224,0.8){% elif skin == 'Citrus' %}0 0 8px rgba(199,205,105,0.8){% elif skin == 'Watermelon' %}0 0 8px rgba(201,165,142,0.8){% elif skin == 'Orchid' %}0 0 8px rgba(217,136,194,0.8){% elif skin == 'Reef' %}0 0 8px rgba(185,188,151,0.8){% elif skin == 'Frost' %}0 0 8px rgba(158,204,250,0.8){% elif skin == 'Horizon' %}0 0 8px rgba(122,162,247,0.8){% elif skin == 'Neon Pink' %}0 0 8px rgba(247,118,142,0.8){% elif skin == 'Neon Green' %}0 0 8px rgba(158,206,106,0.8){% elif skin == 'Etched' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Obsidian' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Nebula' %}0 0 8px rgba(124,112,226,0.8){% else %}0 0 8px rgba(0,188,212,0.8){% endif %}{% else %}none{% endif %} !important;\n}\n/* /skin-period */\n\n@media (min-width: 451px) { :host { padding: 0 !important; display: block !important; } ha-card { width: 100% !important; max-width: none !important; height: 68px !important; margin-bottom: 16px !important; } #name, div#name { white-space: normal !important; line-height: 1.6 !important; text-align: center !important; padding: 0 10px !important; } }"
+            }
+           }
+          },
+          {
+           "type": "conditional",
+           "conditions": [
+            {
+             "condition": "state",
+             "entity": "input_select.epark_stage",
+             "state": "sending"
+            }
+           ],
+           "card": {
+            "type": "custom:button-card",
+            "name": "SENDING…",
+            "show_icon": false,
+            "show_name": true,
+            "tap_action": {
+             "action": "none"
+            },
+            "styles": {
+             "card": [
+              {
+               "padding": "0"
+              },
+              {
+               "height": "52px"
+              },
+              {
+               "background": "transparent"
+              },
+              {
+               "border": "none"
+              },
+              {
+               "box-shadow": "none"
+              },
+              {
+               "cursor": "progress"
+              }
+             ],
+             "name": [
+              {
+               "color": "#fff"
+              },
+              {
+               "font-size": "14px"
+              },
+              {
+               "font-weight": "700"
+              },
+              {
+               "letter-spacing": "3px"
+              },
+              {
+               "white-space": "nowrap"
+              }
+             ]
+            },
+            "card_mod": {
+             "style": ":host { display: flex !important; justify-content: center !important; padding: 12px 0 6px !important; margin: 0 !important; } ha-card { background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%) !important; border-radius: 14px !important; --ha-card-background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%) !important; box-shadow: 0 4px 20px rgba(0,188,212,0.4), inset 0 1px 0 rgba(255,255,255,0.2) !important; border: 1px solid rgba(255,255,255,0.15) !important; min-height: 0 !important; height: 52px !important; width: 255px !important; max-width: 255px !important; flex: 0 0 auto !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; } #container { height: 100% !important; width: 100% !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; } #name, div#name { overflow: visible !important; text-overflow: clip !important; max-width: none !important; width: auto !important; white-space: nowrap !important; padding: 0 !important; margin: 0 !important; line-height: 1 !important; display: flex !important; align-items: center !important; justify-content: center !important; }\n/* epark-guard */\nha-card {\n  border-radius: 14px !important; --ha-card-border-radius: 14px !important; overflow: hidden !important;\n}\n/* skin-period */\n{% set skin = states('input_select.card_skin') %}\n{% set on = true %}\nha-card {\n  background: {% if on %}{% if skin == 'Glass' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Poster' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Ember' %}linear-gradient(135deg, rgba(224,175,104,0.28), rgba(224,175,104,0.07)){% elif skin == 'Violet' %}linear-gradient(135deg, rgba(187,154,247,0.28), rgba(187,154,247,0.07)){% elif skin == 'Aurora' %}linear-gradient(135deg, rgba(150,165,240,0.28), rgba(150,165,240,0.07)){% elif skin == 'Sunset' %}linear-gradient(135deg, rgba(236,146,123,0.28), rgba(236,146,123,0.07)){% elif skin == 'Lagoon' %}linear-gradient(135deg, rgba(118,190,224,0.28), rgba(118,190,224,0.07)){% elif skin == 'Citrus' %}linear-gradient(135deg, rgba(199,205,105,0.28), rgba(199,205,105,0.07)){% elif skin == 'Watermelon' %}linear-gradient(135deg, rgba(201,165,142,0.28), rgba(201,165,142,0.07)){% elif skin == 'Orchid' %}linear-gradient(135deg, rgba(217,136,194,0.28), rgba(217,136,194,0.07)){% elif skin == 'Reef' %}linear-gradient(135deg, rgba(185,188,151,0.28), rgba(185,188,151,0.07)){% elif skin == 'Frost' %}linear-gradient(135deg, rgba(158,204,250,0.28), rgba(158,204,250,0.07)){% elif skin == 'Horizon' %}linear-gradient(135deg, rgba(122,162,247,0.28), rgba(122,162,247,0.07)){% elif skin == 'Neon Pink' %}linear-gradient(135deg, rgba(247,118,142,0.28), rgba(247,118,142,0.07)){% elif skin == 'Neon Green' %}linear-gradient(135deg, rgba(158,206,106,0.28), rgba(158,206,106,0.07)){% elif skin == 'Etched' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Obsidian' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Nebula' %}linear-gradient(135deg, rgba(124,112,226,0.28), rgba(124,112,226,0.07)){% else %}linear-gradient(135deg, rgba(0,188,212,0.28), rgba(0,188,212,0.07)){% endif %}{% else %}rgba(255,255,255,0.03){% endif %} !important;\n  border: 1px solid {% if on %}{% if skin == 'Glass' %}rgba(255,255,255,0.45){% elif skin == 'Poster' %}rgba(255,255,255,0.45){% elif skin == 'Ember' %}rgba(224,175,104,0.65){% elif skin == 'Violet' %}rgba(187,154,247,0.65){% elif skin == 'Aurora' %}rgba(150,165,240,0.65){% elif skin == 'Sunset' %}rgba(236,146,123,0.65){% elif skin == 'Lagoon' %}rgba(118,190,224,0.65){% elif skin == 'Citrus' %}rgba(199,205,105,0.65){% elif skin == 'Watermelon' %}rgba(201,165,142,0.65){% elif skin == 'Orchid' %}rgba(217,136,194,0.65){% elif skin == 'Reef' %}rgba(185,188,151,0.65){% elif skin == 'Frost' %}rgba(158,204,250,0.65){% elif skin == 'Horizon' %}rgba(122,162,247,0.65){% elif skin == 'Neon Pink' %}rgba(247,118,142,0.65){% elif skin == 'Neon Green' %}rgba(158,206,106,0.65){% elif skin == 'Etched' %}rgba(255,255,255,0.45){% elif skin == 'Obsidian' %}rgba(255,255,255,0.45){% elif skin == 'Nebula' %}rgba(124,112,226,0.65){% else %}rgba(0,188,212,0.65){% endif %}{% else %}rgba(255,255,255,0.07){% endif %} !important;\n  box-shadow: {% if on %}{% if skin == 'Glass' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Poster' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Ember' %}0 0 16px rgba(224,175,104,0.25){% elif skin == 'Violet' %}0 0 16px rgba(187,154,247,0.25){% elif skin == 'Aurora' %}0 0 16px rgba(150,165,240,0.25){% elif skin == 'Sunset' %}0 0 16px rgba(236,146,123,0.25){% elif skin == 'Lagoon' %}0 0 16px rgba(118,190,224,0.25){% elif skin == 'Citrus' %}0 0 16px rgba(199,205,105,0.25){% elif skin == 'Watermelon' %}0 0 16px rgba(201,165,142,0.25){% elif skin == 'Orchid' %}0 0 16px rgba(217,136,194,0.25){% elif skin == 'Reef' %}0 0 16px rgba(185,188,151,0.25){% elif skin == 'Frost' %}0 0 16px rgba(158,204,250,0.25){% elif skin == 'Horizon' %}0 0 16px rgba(122,162,247,0.25){% elif skin == 'Neon Pink' %}0 0 16px rgba(247,118,142,0.25){% elif skin == 'Neon Green' %}0 0 16px rgba(158,206,106,0.25){% elif skin == 'Etched' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Obsidian' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Nebula' %}0 0 16px rgba(124,112,226,0.25){% else %}0 0 16px rgba(0,188,212,0.25){% endif %}{% else %}none{% endif %} !important;\n}\n#name, div#name {\n  color: {% if on %}#fff{% else %}rgba(255,255,255,0.45){% endif %} !important;\n  text-shadow: {% if on %}{% if skin == 'Glass' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Poster' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Ember' %}0 0 8px rgba(224,175,104,0.8){% elif skin == 'Violet' %}0 0 8px rgba(187,154,247,0.8){% elif skin == 'Aurora' %}0 0 8px rgba(150,165,240,0.8){% elif skin == 'Sunset' %}0 0 8px rgba(236,146,123,0.8){% elif skin == 'Lagoon' %}0 0 8px rgba(118,190,224,0.8){% elif skin == 'Citrus' %}0 0 8px rgba(199,205,105,0.8){% elif skin == 'Watermelon' %}0 0 8px rgba(201,165,142,0.8){% elif skin == 'Orchid' %}0 0 8px rgba(217,136,194,0.8){% elif skin == 'Reef' %}0 0 8px rgba(185,188,151,0.8){% elif skin == 'Frost' %}0 0 8px rgba(158,204,250,0.8){% elif skin == 'Horizon' %}0 0 8px rgba(122,162,247,0.8){% elif skin == 'Neon Pink' %}0 0 8px rgba(247,118,142,0.8){% elif skin == 'Neon Green' %}0 0 8px rgba(158,206,106,0.8){% elif skin == 'Etched' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Obsidian' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Nebula' %}0 0 8px rgba(124,112,226,0.8){% else %}0 0 8px rgba(0,188,212,0.8){% endif %}{% else %}none{% endif %} !important;\n}\n/* /skin-period */\nha-card { animation: epk-pulse 1.1s ease-in-out infinite; cursor: progress !important; } @keyframes epk-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }\n@media (min-width: 451px) { :host { padding: 0 !important; display: block !important; } ha-card { width: 100% !important; max-width: none !important; height: 68px !important; margin-bottom: 16px !important; } #name, div#name { white-space: normal !important; line-height: 1.6 !important; text-align: center !important; padding: 0 10px !important; } }"
+            }
+           }
+          },
+          {
+           "type": "conditional",
+           "conditions": [
+            {
+             "condition": "state",
+             "entity": "input_select.epark_stage",
+             "state": "sent"
+            }
+           ],
+           "card": {
+            "type": "custom:button-card",
+            "name": "[[[ if (!window.__epkCommit2) { window.__epkCommit2 = 1; const h = (ev) => { const p = ev.composedPath ? ev.composedPath() : []; if (!p.some(n => { const t = n && n.tagName === 'BUTTON-CARD' && n._config && n._config.tap_action; return t && (t.perform_action === 'script.epark_issue_from_form' || (t.perform_action === 'input_select.select_option' && t.target && t.target.entity_id === 'input_select.epark_duration_hours')); })) return; let a = document.activeElement; while (a && a.shadowRoot && a.shadowRoot.activeElement) a = a.shadowRoot.activeElement; if (a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA') && a.blur) a.blur(); }; window.addEventListener('pointerdown', h, true); window.addEventListener('touchstart', h, {capture: true, passive: true}); } if (!window.__epkLive1) { window.__epkLive1 = 1; let tmr = null, seq = 0; window.addEventListener('input', (ev) => { const p = ev.composedPath ? ev.composedPath() : []; const row = p.find(n => n && n.tagName === 'HUI-INPUT-TEXT-ENTITY-ROW' && n._config && n._config.entity === 'input_text.epark_plate'); if (!row) return; const v = String((p[0] && p[0].value) || '').replace(/\\s+/g, '').toUpperCase(); clearTimeout(tmr); tmr = setTimeout(async () => { const ha = document.querySelector('home-assistant'); const hs = ha && ha.hass; if (!hs) return; const my = ++seq; const put = (x) => hs.callService('input_text', 'set_value', {entity_id: 'input_text.epark_vehicle', value: x}); if (v.length < 5 || !/^[A-Z0-9]+$/.test(v)) { put(''); return; } try { const r = await hs.callService('epark', 'lookup_plate', {license_plate: v}, undefined, false, true); if (my !== seq) return; const c = (r && r.response) || {}; put(c.found ? 'ok|' + [[c.brand, c.model].filter(Boolean).join(' '), c.color, c.year].filter(Boolean).join(' \\u00b7 ') : 'none|'); } catch (e) { if (my === seq) put('fail|'); } }, 700); }, true); } return '✓  PERMIT SENT'; ]]]",
+            "show_icon": false,
+            "show_name": true,
+            "tap_action": {
+             "action": "perform-action",
+             "perform_action": "script.epark_issue_from_form",
+             "data": {}
+            },
+            "styles": {
+             "card": [
+              {
+               "padding": "0"
+              },
+              {
+               "height": "52px"
+              },
+              {
+               "cursor": "pointer"
+              },
+              {
+               "background": "transparent"
+              },
+              {
+               "border": "none"
+              },
+              {
+               "box-shadow": "none"
+              }
+             ],
+             "name": [
+              {
+               "color": "#fff"
+              },
+              {
+               "font-size": "14px"
+              },
+              {
+               "font-weight": "700"
+              },
+              {
+               "letter-spacing": "3px"
+              },
+              {
+               "white-space": "nowrap"
+              }
+             ]
+            },
+            "card_mod": {
+             "style": ":host { display: flex !important; justify-content: center !important; padding: 12px 0 6px !important; margin: 0 !important; } ha-card { background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%) !important; border-radius: 14px !important; --ha-card-background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%) !important; box-shadow: 0 4px 20px rgba(0,188,212,0.4), inset 0 1px 0 rgba(255,255,255,0.2) !important; border: 1px solid rgba(255,255,255,0.15) !important; min-height: 0 !important; height: 52px !important; width: 255px !important; max-width: 255px !important; flex: 0 0 auto !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; } #container { height: 100% !important; width: 100% !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; } #name, div#name { overflow: visible !important; text-overflow: clip !important; max-width: none !important; width: auto !important; white-space: nowrap !important; padding: 0 !important; margin: 0 !important; line-height: 1 !important; display: flex !important; align-items: center !important; justify-content: center !important; }\n/* epark-guard */\nha-card { background: linear-gradient(135deg, rgba(102,187,106,0.28), rgba(102,187,106,0.07)) !important; border: 1px solid rgba(102,187,106,0.65) !important; box-shadow: 0 0 16px rgba(102,187,106,0.25) !important; } #name, div#name { color: #fff !important; text-shadow: 0 0 8px rgba(102,187,106,0.8) !important; }\n@media (min-width: 451px) { :host { padding: 0 !important; display: block !important; } ha-card { width: 100% !important; max-width: none !important; height: 68px !important; margin-bottom: 16px !important; } #name, div#name { white-space: normal !important; line-height: 1.6 !important; text-align: center !important; padding: 0 10px !important; } }"
+            }
+           }
+          },
+          {
+           "type": "conditional",
+           "conditions": [
+            {
+             "condition": "state",
+             "entity": "input_select.epark_stage",
+             "state": "error"
+            }
+           ],
+           "card": {
+            "type": "custom:button-card",
+            "name": "[[[ if (!window.__epkCommit2) { window.__epkCommit2 = 1; const h = (ev) => { const p = ev.composedPath ? ev.composedPath() : []; if (!p.some(n => { const t = n && n.tagName === 'BUTTON-CARD' && n._config && n._config.tap_action; return t && (t.perform_action === 'script.epark_issue_from_form' || (t.perform_action === 'input_select.select_option' && t.target && t.target.entity_id === 'input_select.epark_duration_hours')); })) return; let a = document.activeElement; while (a && a.shadowRoot && a.shadowRoot.activeElement) a = a.shadowRoot.activeElement; if (a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA') && a.blur) a.blur(); }; window.addEventListener('pointerdown', h, true); window.addEventListener('touchstart', h, {capture: true, passive: true}); } if (!window.__epkLive1) { window.__epkLive1 = 1; let tmr = null, seq = 0; window.addEventListener('input', (ev) => { const p = ev.composedPath ? ev.composedPath() : []; const row = p.find(n => n && n.tagName === 'HUI-INPUT-TEXT-ENTITY-ROW' && n._config && n._config.entity === 'input_text.epark_plate'); if (!row) return; const v = String((p[0] && p[0].value) || '').replace(/\\s+/g, '').toUpperCase(); clearTimeout(tmr); tmr = setTimeout(async () => { const ha = document.querySelector('home-assistant'); const hs = ha && ha.hass; if (!hs) return; const my = ++seq; const put = (x) => hs.callService('input_text', 'set_value', {entity_id: 'input_text.epark_vehicle', value: x}); if (v.length < 5 || !/^[A-Z0-9]+$/.test(v)) { put(''); return; } try { const r = await hs.callService('epark', 'lookup_plate', {license_plate: v}, undefined, false, true); if (my !== seq) return; const c = (r && r.response) || {}; put(c.found ? 'ok|' + [[c.brand, c.model].filter(Boolean).join(' '), c.color, c.year].filter(Boolean).join(' \\u00b7 ') : 'none|'); } catch (e) { if (my === seq) put('fail|'); } }, 700); }, true); } return '↻  TRY AGAIN'; ]]]",
+            "show_icon": false,
+            "show_name": true,
+            "tap_action": {
+             "action": "perform-action",
+             "perform_action": "script.epark_issue_from_form",
+             "data": {}
+            },
+            "styles": {
+             "card": [
+              {
+               "padding": "0"
+              },
+              {
+               "height": "52px"
+              },
+              {
+               "cursor": "pointer"
+              },
+              {
+               "background": "transparent"
+              },
+              {
+               "border": "none"
+              },
+              {
+               "box-shadow": "none"
+              }
+             ],
+             "name": [
+              {
+               "color": "#fff"
+              },
+              {
+               "font-size": "14px"
+              },
+              {
+               "font-weight": "700"
+              },
+              {
+               "letter-spacing": "3px"
+              },
+              {
+               "white-space": "nowrap"
+              }
+             ]
+            },
+            "card_mod": {
+             "style": ":host { display: flex !important; justify-content: center !important; padding: 12px 0 6px !important; margin: 0 !important; } ha-card { background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%) !important; border-radius: 14px !important; --ha-card-background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%) !important; box-shadow: 0 4px 20px rgba(0,188,212,0.4), inset 0 1px 0 rgba(255,255,255,0.2) !important; border: 1px solid rgba(255,255,255,0.15) !important; min-height: 0 !important; height: 52px !important; width: 255px !important; max-width: 255px !important; flex: 0 0 auto !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; } #container { height: 100% !important; width: 100% !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; } #name, div#name { overflow: visible !important; text-overflow: clip !important; max-width: none !important; width: auto !important; white-space: nowrap !important; padding: 0 !important; margin: 0 !important; line-height: 1 !important; display: flex !important; align-items: center !important; justify-content: center !important; }\n/* epark-guard */\nha-card { background: linear-gradient(135deg, rgba(224,160,64,0.28), rgba(224,160,64,0.07)) !important; border: 1px solid rgba(224,160,64,0.65) !important; box-shadow: 0 0 16px rgba(224,160,64,0.25) !important; } #name, div#name { color: #fff !important; text-shadow: 0 0 8px rgba(224,160,64,0.8) !important; }\n@media (min-width: 451px) { :host { padding: 0 !important; display: block !important; } ha-card { width: 100% !important; max-width: none !important; height: 68px !important; margin-bottom: 16px !important; } #name, div#name { white-space: normal !important; line-height: 1.6 !important; text-align: center !important; padding: 0 10px !important; } }"
+            }
+           }
+          },
+          {
+           "type": "conditional",
+           "conditions": [
+            {
+             "condition": "state",
+             "entity": "input_select.epark_stage",
+             "state": "confirm"
+            }
+           ],
+           "card": {
+            "type": "custom:button-card",
+            "name": "✕  CANCEL",
+            "show_icon": false,
+            "show_name": true,
+            "tap_action": {
+             "action": "perform-action",
+             "perform_action": "input_select.select_option",
+             "target": {
+              "entity_id": "input_select.epark_stage"
+             },
+             "data": {
+              "option": "idle"
+             }
+            },
+            "styles": {
+             "card": [
+              {
+               "padding": "0"
+              },
+              {
+               "height": "52px"
+              },
+              {
+               "cursor": "pointer"
+              },
+              {
+               "background": "transparent"
+              },
+              {
+               "border": "none"
+              },
+              {
+               "box-shadow": "none"
+              }
+             ],
+             "name": [
+              {
+               "color": "#fff"
+              },
+              {
+               "font-size": "14px"
+              },
+              {
+               "font-weight": "700"
+              },
+              {
+               "letter-spacing": "3px"
+              },
+              {
+               "white-space": "nowrap"
+              }
+             ]
+            },
+            "card_mod": {
+             "style": ":host { display: flex !important; justify-content: center !important; padding: 12px 0 6px !important; margin: 0 !important; } ha-card { background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%) !important; border-radius: 14px !important; --ha-card-background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%) !important; box-shadow: 0 4px 20px rgba(0,188,212,0.4), inset 0 1px 0 rgba(255,255,255,0.2) !important; border: 1px solid rgba(255,255,255,0.15) !important; min-height: 0 !important; height: 52px !important; width: 255px !important; max-width: 255px !important; flex: 0 0 auto !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; } #container { height: 100% !important; width: 100% !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; } #name, div#name { overflow: visible !important; text-overflow: clip !important; max-width: none !important; width: auto !important; white-space: nowrap !important; padding: 0 !important; margin: 0 !important; line-height: 1 !important; display: flex !important; align-items: center !important; justify-content: center !important; }\n/* epark-guard */\nha-card {\n  border-radius: 14px !important; --ha-card-border-radius: 14px !important; overflow: hidden !important;\n}\n/* skin-period */\n{% set skin = states('input_select.card_skin') %}\n{% set on = is_state('input_select.epark_stage', 'idle') %}\nha-card {\n  background: {% if on %}{% if skin == 'Glass' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Poster' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Ember' %}linear-gradient(135deg, rgba(224,175,104,0.28), rgba(224,175,104,0.07)){% elif skin == 'Violet' %}linear-gradient(135deg, rgba(187,154,247,0.28), rgba(187,154,247,0.07)){% elif skin == 'Aurora' %}linear-gradient(135deg, rgba(150,165,240,0.28), rgba(150,165,240,0.07)){% elif skin == 'Sunset' %}linear-gradient(135deg, rgba(236,146,123,0.28), rgba(236,146,123,0.07)){% elif skin == 'Lagoon' %}linear-gradient(135deg, rgba(118,190,224,0.28), rgba(118,190,224,0.07)){% elif skin == 'Citrus' %}linear-gradient(135deg, rgba(199,205,105,0.28), rgba(199,205,105,0.07)){% elif skin == 'Watermelon' %}linear-gradient(135deg, rgba(201,165,142,0.28), rgba(201,165,142,0.07)){% elif skin == 'Orchid' %}linear-gradient(135deg, rgba(217,136,194,0.28), rgba(217,136,194,0.07)){% elif skin == 'Reef' %}linear-gradient(135deg, rgba(185,188,151,0.28), rgba(185,188,151,0.07)){% elif skin == 'Frost' %}linear-gradient(135deg, rgba(158,204,250,0.28), rgba(158,204,250,0.07)){% elif skin == 'Horizon' %}linear-gradient(135deg, rgba(122,162,247,0.28), rgba(122,162,247,0.07)){% elif skin == 'Neon Pink' %}linear-gradient(135deg, rgba(247,118,142,0.28), rgba(247,118,142,0.07)){% elif skin == 'Neon Green' %}linear-gradient(135deg, rgba(158,206,106,0.28), rgba(158,206,106,0.07)){% elif skin == 'Etched' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Obsidian' %}linear-gradient(135deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05)){% elif skin == 'Nebula' %}linear-gradient(135deg, rgba(124,112,226,0.28), rgba(124,112,226,0.07)){% else %}linear-gradient(135deg, rgba(0,188,212,0.28), rgba(0,188,212,0.07)){% endif %}{% else %}rgba(255,255,255,0.03){% endif %} !important;\n  border: 1px solid {% if on %}{% if skin == 'Glass' %}rgba(255,255,255,0.45){% elif skin == 'Poster' %}rgba(255,255,255,0.45){% elif skin == 'Ember' %}rgba(224,175,104,0.65){% elif skin == 'Violet' %}rgba(187,154,247,0.65){% elif skin == 'Aurora' %}rgba(150,165,240,0.65){% elif skin == 'Sunset' %}rgba(236,146,123,0.65){% elif skin == 'Lagoon' %}rgba(118,190,224,0.65){% elif skin == 'Citrus' %}rgba(199,205,105,0.65){% elif skin == 'Watermelon' %}rgba(201,165,142,0.65){% elif skin == 'Orchid' %}rgba(217,136,194,0.65){% elif skin == 'Reef' %}rgba(185,188,151,0.65){% elif skin == 'Frost' %}rgba(158,204,250,0.65){% elif skin == 'Horizon' %}rgba(122,162,247,0.65){% elif skin == 'Neon Pink' %}rgba(247,118,142,0.65){% elif skin == 'Neon Green' %}rgba(158,206,106,0.65){% elif skin == 'Etched' %}rgba(255,255,255,0.45){% elif skin == 'Obsidian' %}rgba(255,255,255,0.45){% elif skin == 'Nebula' %}rgba(124,112,226,0.65){% else %}rgba(0,188,212,0.65){% endif %}{% else %}rgba(255,255,255,0.07){% endif %} !important;\n  box-shadow: {% if on %}{% if skin == 'Glass' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Poster' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Ember' %}0 0 16px rgba(224,175,104,0.25){% elif skin == 'Violet' %}0 0 16px rgba(187,154,247,0.25){% elif skin == 'Aurora' %}0 0 16px rgba(150,165,240,0.25){% elif skin == 'Sunset' %}0 0 16px rgba(236,146,123,0.25){% elif skin == 'Lagoon' %}0 0 16px rgba(118,190,224,0.25){% elif skin == 'Citrus' %}0 0 16px rgba(199,205,105,0.25){% elif skin == 'Watermelon' %}0 0 16px rgba(201,165,142,0.25){% elif skin == 'Orchid' %}0 0 16px rgba(217,136,194,0.25){% elif skin == 'Reef' %}0 0 16px rgba(185,188,151,0.25){% elif skin == 'Frost' %}0 0 16px rgba(158,204,250,0.25){% elif skin == 'Horizon' %}0 0 16px rgba(122,162,247,0.25){% elif skin == 'Neon Pink' %}0 0 16px rgba(247,118,142,0.25){% elif skin == 'Neon Green' %}0 0 16px rgba(158,206,106,0.25){% elif skin == 'Etched' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Obsidian' %}0 0 16px rgba(255,255,255,0.15){% elif skin == 'Nebula' %}0 0 16px rgba(124,112,226,0.25){% else %}0 0 16px rgba(0,188,212,0.25){% endif %}{% else %}none{% endif %} !important;\n}\n#name, div#name {\n  color: {% if on %}#fff{% else %}rgba(255,255,255,0.45){% endif %} !important;\n  text-shadow: {% if on %}{% if skin == 'Glass' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Poster' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Ember' %}0 0 8px rgba(224,175,104,0.8){% elif skin == 'Violet' %}0 0 8px rgba(187,154,247,0.8){% elif skin == 'Aurora' %}0 0 8px rgba(150,165,240,0.8){% elif skin == 'Sunset' %}0 0 8px rgba(236,146,123,0.8){% elif skin == 'Lagoon' %}0 0 8px rgba(118,190,224,0.8){% elif skin == 'Citrus' %}0 0 8px rgba(199,205,105,0.8){% elif skin == 'Watermelon' %}0 0 8px rgba(201,165,142,0.8){% elif skin == 'Orchid' %}0 0 8px rgba(217,136,194,0.8){% elif skin == 'Reef' %}0 0 8px rgba(185,188,151,0.8){% elif skin == 'Frost' %}0 0 8px rgba(158,204,250,0.8){% elif skin == 'Horizon' %}0 0 8px rgba(122,162,247,0.8){% elif skin == 'Neon Pink' %}0 0 8px rgba(247,118,142,0.8){% elif skin == 'Neon Green' %}0 0 8px rgba(158,206,106,0.8){% elif skin == 'Etched' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Obsidian' %}0 0 8px rgba(255,255,255,0.50){% elif skin == 'Nebula' %}0 0 8px rgba(124,112,226,0.8){% else %}0 0 8px rgba(0,188,212,0.8){% endif %}{% else %}none{% endif %} !important;\n}\n/* /skin-period */\n\n@media (min-width: 451px) { :host { padding: 0 !important; display: block !important; } ha-card { width: 100% !important; max-width: none !important; height: 68px !important; margin-bottom: 16px !important; } #name, div#name { white-space: normal !important; line-height: 1.6 !important; text-align: center !important; padding: 0 10px !important; } }"
+            }
+           }
+          }
+         ]
+        }
+       ],
+       "card_mod": {
+        "style": "ha-card, :host, #root { background: transparent !important; box-shadow: none !important; border: none !important; } #root { grid-template-columns: minmax(0, 1fr) 168px !important; gap: 0 14px !important; align-items: center !important; padding-right: 20px !important; } @media (max-width: 450px) { #root { grid-template-columns: minmax(0, 1fr) !important; padding-right: 0 !important; } }"
+       }
+      },
+      {
+       "type": "markdown",
+       "content": "{% set v = states('input_text.epark_vehicle').split('|') %}{% set st = v[0] %}{% set t = v[1] if v | length > 1 else '' %}<div>{% if st == 'ok' %}<ha-icon icon=\"mdi:car-side\"></ha-icon><b>{{ t }}</b>{% elif st == 'looking' %}<ha-icon icon=\"mdi:magnify\"></ha-icon><small>Looking up the car …</small>{% elif st == 'none' %}<ha-icon icon=\"mdi:alert-outline\"></ha-icon><font color=\"#e0a040\">Not in the motor register – check the plate</font>{% elif st == 'fail' %}<ha-icon icon=\"mdi:help-circle-outline\"></ha-icon><small>Car lookup failed</small>{% endif %}</div>",
+       "card_mod": {
+        "style": {
+         ".": "{% set st = states('input_text.epark_vehicle').split('|')[0] %}\nha-card { background: transparent !important; box-shadow: none !important; border: none !important; padding: 2px 24px 4px 70px !important; margin: 0 !important; } ha-card > .card-content, .card-content { padding: 0 !important; } ha-markdown { display: block !important; padding: 0 !important; } :host { display: block; } ha-card { display: {{ 'block' if st in ['ok', 'looking', 'none', 'fail'] else 'none' }} !important; } @media (max-width: 450px) { ha-card { display: none !important; } }",
+         "ha-markdown$": "ha-markdown-element > div { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.75); } ha-icon { --mdc-icon-size: 18px; color: rgba(255,255,255,0.5); flex: 0 0 auto; } b { font-weight: 600; letter-spacing: 0.5px; color: rgba(255,255,255,0.9); } small { font-size: 12px; color: rgba(255,255,255,0.45); }"
+        }
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "condition": "state",
+         "entity": "input_select.epark_stage",
+         "state": "confirm"
+        }
+       ],
+       "card": {
+        "type": "vertical-stack",
+        "cards": [
+         {
+          "type": "markdown",
+          "content": "{% set m = states('input_text.epark_message').split('|') %}<ha-alert alert-type=\"warning\" title=\"Already has a permit\"><b>{{ m[0] }}</b> is covered{% if m | length > 1 and m[1] %} until <b>{{ m[1] }}</b>{% endif %}. Send another {{ m[2] if m | length > 2 else '' }} h permit?</ha-alert>",
+          "card_mod": {
+           "style": {
+            ".": "ha-card { background: transparent !important; box-shadow: none !important; border: none !important; padding: 10px 20px 10px !important; margin: 0 !important; } ha-card > .card-content, .card-content { padding: 0 !important; } ha-markdown { display: block !important; padding: 0 !important; } :host { display: block; }",
+            "ha-markdown$": "ha-alert { display: block; text-align: left; } ha-alert b { letter-spacing: 1px; }"
+           }
+          }
+         },
+         {
+          "type": "custom:button-card",
+          "name": "[[[ if (!window.__epkCommit2) { window.__epkCommit2 = 1; const h = (ev) => { const p = ev.composedPath ? ev.composedPath() : []; if (!p.some(n => { const t = n && n.tagName === 'BUTTON-CARD' && n._config && n._config.tap_action; return t && (t.perform_action === 'script.epark_issue_from_form' || (t.perform_action === 'input_select.select_option' && t.target && t.target.entity_id === 'input_select.epark_duration_hours')); })) return; let a = document.activeElement; while (a && a.shadowRoot && a.shadowRoot.activeElement) a = a.shadowRoot.activeElement; if (a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA') && a.blur) a.blur(); }; window.addEventListener('pointerdown', h, true); window.addEventListener('touchstart', h, {capture: true, passive: true}); } if (!window.__epkLive1) { window.__epkLive1 = 1; let tmr = null, seq = 0; window.addEventListener('input', (ev) => { const p = ev.composedPath ? ev.composedPath() : []; const row = p.find(n => n && n.tagName === 'HUI-INPUT-TEXT-ENTITY-ROW' && n._config && n._config.entity === 'input_text.epark_plate'); if (!row) return; const v = String((p[0] && p[0].value) || '').replace(/\\s+/g, '').toUpperCase(); clearTimeout(tmr); tmr = setTimeout(async () => { const ha = document.querySelector('home-assistant'); const hs = ha && ha.hass; if (!hs) return; const my = ++seq; const put = (x) => hs.callService('input_text', 'set_value', {entity_id: 'input_text.epark_vehicle', value: x}); if (v.length < 5 || !/^[A-Z0-9]+$/.test(v)) { put(''); return; } try { const r = await hs.callService('epark', 'lookup_plate', {license_plate: v}, undefined, false, true); if (my !== seq) return; const c = (r && r.response) || {}; put(c.found ? 'ok|' + [[c.brand, c.model].filter(Boolean).join(' '), c.color, c.year].filter(Boolean).join(' \\u00b7 ') : 'none|'); } catch (e) { if (my === seq) put('fail|'); } }, 700); }, true); } return 'SEND ANOTHER'; ]]]",
+          "show_icon": false,
+          "show_name": true,
+          "tap_action": {
+           "action": "perform-action",
+           "perform_action": "script.epark_issue_from_form",
+           "data": {
+            "confirm": true
+           }
+          },
+          "styles": {
+           "card": [
+            {
+             "padding": "0"
+            },
+            {
+             "height": "52px"
+            },
+            {
+             "cursor": "pointer"
+            },
+            {
+             "background": "transparent"
+            },
+            {
+             "border": "none"
+            },
+            {
+             "box-shadow": "none"
+            }
+           ],
+           "name": [
+            {
+             "color": "#fff"
+            },
+            {
+             "font-size": "14px"
+            },
+            {
+             "font-weight": "700"
+            },
+            {
+             "letter-spacing": "3px"
+            },
+            {
+             "white-space": "nowrap"
+            }
+           ]
+          },
+          "card_mod": {
+           "style": ":host { display: flex !important; justify-content: center !important; padding: 12px 0 6px !important; margin: 0 !important; } ha-card { background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%) !important; border-radius: 14px !important; --ha-card-background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%) !important; box-shadow: 0 4px 20px rgba(0,188,212,0.4), inset 0 1px 0 rgba(255,255,255,0.2) !important; border: 1px solid rgba(255,255,255,0.15) !important; min-height: 0 !important; height: 52px !important; width: 255px !important; max-width: 255px !important; flex: 0 0 auto !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; } #container { height: 100% !important; width: 100% !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; } #name, div#name { overflow: visible !important; text-overflow: clip !important; max-width: none !important; width: auto !important; white-space: nowrap !important; padding: 0 !important; margin: 0 !important; line-height: 1 !important; display: flex !important; align-items: center !important; justify-content: center !important; }\n/* epark-guard */\nha-card { background: linear-gradient(135deg, rgba(224,160,64,0.28), rgba(224,160,64,0.07)) !important; border: 1px solid rgba(224,160,64,0.65) !important; box-shadow: 0 0 16px rgba(224,160,64,0.25) !important; } #name, div#name { color: #fff !important; text-shadow: 0 0 8px rgba(224,160,64,0.8) !important; }"
+          }
+         }
+        ]
+       }
+      },
+      {
+       "type": "markdown",
+       "content": "{% set st = states('input_select.epark_stage') %}{% set m = states('input_text.epark_message').split('|') %}{% if st == 'sending' %}<ha-alert alert-type=\"info\">Sending {{ m[1] if m | length > 1 else '' }} h for <b>{{ m[0] }}</b> …</ha-alert>{% elif st == 'sent' %}<ha-alert alert-type=\"success\"><b>{{ m[0] }}</b> · {{ m[2] if m | length > 2 else '' }} h · valid until <b>{{ m[1] if m | length > 1 else '' }}</b></ha-alert>{% elif st == 'error' %}<ha-alert alert-type=\"error\">{{ states('input_text.epark_message') }}</ha-alert>{% endif %}",
+       "card_mod": {
+        "style": {
+         ".": "/* epark-guard */\n{% set st = states('input_select.epark_stage') %}\nha-card { background: transparent !important; box-shadow: none !important; border: none !important; padding: 8px 20px 0 !important; margin: 0 !important; } ha-card > .card-content, .card-content { padding: 0 !important; } ha-markdown { display: block !important; padding: 0 !important; } :host { display: block; } ha-card { display: {{ 'block' if st in ['sending', 'sent', 'error'] else 'none' }} !important; }",
+         "ha-markdown$": "ha-alert { display: block; text-align: left; } ha-alert b { letter-spacing: 1px; }"
+        }
+       }
+      },
+      {
+       "type": "markdown",
+       "content": "&nbsp;",
+       "card_mod": {
+        "style": "ha-card { background: transparent !important; box-shadow: none !important; border: none !important; padding: 0 !important; margin: 0 !important; height: 20px !important; min-height: 20px !important; display: block !important; } ha-card > .card-content, .card-content { padding: 0 !important; height: 20px !important; overflow: hidden !important; } ha-markdown { display: block !important; padding: 0 !important; height: 0 !important; overflow: hidden !important; } :host { display: block; }"
+       }
+      },
+      {
+       "type": "markdown",
+       "content": "<h4>ACTIVE PERMITS</h4>{% set permits = state_attr('sensor.active_guest_permits', 'permits') or [] %}{% if permits | length == 0 %}<div><small>No active permits</small></div>{% else %}<div>{% for p in permits | sort(attribute='valid_from', reverse=true) %}{% set end_ts = as_timestamp(p.valid_to) %}{% set start_ts = as_timestamp(p.valid_from) %}{% set now_ts = as_timestamp(now()) %}{% set total = (end_ts - start_ts) | round(0) %}{% set remaining = [0, (end_ts - now_ts) | round(0)] | max %}{% set pct = 0 if total == 0 else [100, (remaining / total * 100) | round(0)] | min %}{% set h = (remaining // 3600) | int %}{% set m = ((remaining % 3600) // 60) | int %}<table><tr><td><b>{{ p.plate }}</b></td><td>{{ h }}h {{ '%02d' | format(m) }}m left{% if now_ts - start_ts < 180 %} <mark>NEW</mark>{% endif %} <small>· until {{ end_ts | timestamp_custom('%H:%M') }}</small>{% if p.car %}<div><small>{{ p.car }}</small></div>{% endif %}<table><tr><td width=\"{{ [pct, 1] | max | int }}%\"></td><td></td></tr></table></td></tr></table>{% endfor %}</div>{% endif %}",
+       "card_mod": {
+        "style": {
+         ".": "ha-card { background: transparent !important; box-shadow: none !important; border: none !important; padding: 0 20px 20px 20px !important; margin: 0 !important; } ha-card > .card-content, .card-content { padding: 0 !important; } ha-markdown { display: block !important; padding: 0 !important; } :host { display: block; }",
+         "ha-markdown$": "h4 { margin: 0 0 8px; color: rgba(255,255,255,0.38); font-size: 10px; font-weight: 700; letter-spacing: 2px; } small { color: rgba(255,255,255,0.45); font-size: 12px; font-weight: 400; } div > small { display: block; text-align: center; font-style: italic; color: rgba(255,255,255,0.4); } div > table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 0 0 10px; border: 1px solid rgba(0,188,212,0.12); border-radius: 12px; background: rgba(255,255,255,0.025); } div > table > tbody > tr > td { padding: 12px; border: none; vertical-align: middle; } div > table > tbody > tr > td:first-child { width: 1%; white-space: nowrap; padding-right: 2px; } div > table > tbody > tr > td:first-child b { display: inline-block; min-width: 100px; box-sizing: border-box; padding: 8px 14px; background: #f5f5f0; color: #111; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.5); text-align: center; font-family: 'DIN Alternate', 'Impact', 'Arial Black', sans-serif; font-size: 18px; font-weight: 800; letter-spacing: 2px; } div > table > tbody > tr > td:last-child { color: rgba(255,255,255,0.85); font-size: 12px; font-weight: 600; } td table { width: 100%; height: 4px; margin-top: 7px; border: none; border-collapse: collapse; border-radius: 2px; overflow: hidden; background: rgba(255,255,255,0.08); } td table td { padding: 0 !important; height: 4px; border: none; } td table td:first-child { background: linear-gradient(90deg, rgba(255,255,255,0.45), rgba(255,255,255,0.75)); box-shadow: 0 0 6px rgba(255,255,255,0.20); } mark { margin-left: 4px; padding: 1px 6px; border-radius: 6px; background: rgba(67,160,71,0.25); color: #81c784; font-size: 9px; font-weight: 700; letter-spacing: 1px; } td > div > small { display: block; margin-top: 3px; text-align: left; font-style: normal; font-size: 11px; font-weight: 500; letter-spacing: 0.3px; color: rgba(255,255,255,0.5); } @media (min-width: 451px) { ha-markdown-element > div { max-height: 144px; overflow-y: auto; overscroll-behavior: contain; padding-right: 4px; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.18) transparent; } ha-markdown-element > div::-webkit-scrollbar { width: 6px; } ha-markdown-element > div::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 3px; } }"
+        }
+       }
+      }
+     ],
+     "grid_options": {
+      "columns": 12,
+      "rows": "auto"
+     }
+    },
+    "popup_styles": [
+     {
+      "style": "all",
+      "styles": "--popup-min-width: 510px; --popup-max-width: 510px; --popup-border-radius: 22px; } :host([card]) .content .container { padding: 0 !important; } /* epark-keyboard */ @media (min-width: 451px) and (max-height: 500px) { :host ha-dialog, :host ha-adaptive-dialog { --popup-width: 510px !important; --popup-max-width: 510px !important; --popup-width-full: 510px !important; --popup-min-height: 0px !important; --popup-max-height: calc(100% - 16px) !important; --dialog-surface-margin-top: 8px !important; --popup-border-radius: 22px !important; } } :host([card]) .epark-keyboard-end {"
+     }
+    ],
+    "dismiss_action": {
+     "service": "input_select.select_option",
+     "data": {
+      "entity_id": "input_select.epark_stage",
+      "option": "idle"
+     }
+    },
+    "right_button_action": {
+     "service": "input_select.select_option",
+     "data": {
+      "entity_id": "input_select.epark_stage",
+      "option": "idle"
+     }
+    }
+   }
+  }
+ }
+}

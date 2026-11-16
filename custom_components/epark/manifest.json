@@ -1,0 +1,15 @@
+{
+  "domain": "epark",
+  "name": "e-park (unofficial)",
+  "codeowners": [
+    "@emilhumm"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/emilhumm/Epark_HA_Integration",
+  "integration_type": "hub",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/emilhumm/Epark_HA_Integration/issues",
+  "requirements": [],
+  "version": "0.3.1"
+}
